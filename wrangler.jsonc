@@ -10,5 +10,6 @@
   "durable_objects": {
     "bindings": [{"name": "PARTY_ROOMS", "class_name": "PartyRoomObject"}]
   },
-  "migrations": [{"tag": "v1-party", "new_sqlite_classes": ["PartyRoomObject"]}]
+  "migrations": [{"tag": "v1-party", "new_sqlite_classes": ["PartyRoomObject"]}],
+  "d1_databases": [{"binding":"DB","database_name":"ashen-depths-db","database_id":"4c70ad4a-1d10-49bb-87d0-d7f135cdc8cd","migrations_dir":"server/migrations"}]
 }
