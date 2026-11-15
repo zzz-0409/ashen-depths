@@ -1,0 +1,12 @@
+body.title-shell{background:#080d15}
+body.title-shell> :not(#modal):not(script):not(style):not(link){visibility:hidden!important;pointer-events:none!important}
+body.title-shell #modal{position:fixed;inset:0;background:radial-gradient(ellipse at 65% 30%,#263349 0,transparent 55%),linear-gradient(155deg,#0b121c,#15151d 60%,#312319);z-index:1000;backdrop-filter:none}
+body.title-shell #card{background:rgba(9,14,22,.94);border:1px solid #887550;box-shadow:0 20px 100px #0009;max-height:90dvh;width:min(820px,92vw)}
+body.title-shell #card h2{letter-spacing:.12em;color:#ead6a8}
+.title-subtitle{font-size:1.2rem;color:#b9aa90;text-align:center;letter-spacing:.5em}
+.title-actions{display:grid;gap:16px;margin:30px auto;max-width:420px}.title-actions button{font-size:1.3rem;padding:20px}
+.title-tools{display:flex;justify-content:center;gap:16px}.title-tools button{font-size:28px;width:90px}.title-tools span{display:block;font-size:12px;opacity:0}.title-tools button:is(:focus-visible,:hover) span{opacity:1}
+.tips-layout{display:grid;grid-template-columns:230px 1fr;gap:24px}.tips-layout nav{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tips-layout nav button{display:grid;gap:5px;padding:12px 6px}.tips-layout nav b{font-size:28px}.tips-layout nav span{font-size:12px}.tips-layout section{padding:20px;background:#101923;border-radius:12px;line-height:1.8}.tip-symbol{font-size:54px;color:#dfbf77}
+.lesson-controls{display:flex;align-items:center;gap:16px;line-height:1.8}.lesson-controls>span{font-size:40px}.lesson-count{color:#d8bd84}
+#card :is(button,input,summary):focus-visible{outline:3px solid #ffe5a1!important;outline-offset:3px;box-shadow:0 0 18px #e5bd6259}
+@media(max-width:650px){.tips-layout{grid-template-columns:1fr}.tips-layout nav{grid-template-columns:repeat(4,1fr)}.tips-layout section{padding:14px}.title-actions{margin:18px auto}}
