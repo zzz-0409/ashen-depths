@@ -1,0 +1,14 @@
+#tree line.sky-pattern{stroke:#7491a6;stroke-width:2.4}#tree line.sky-travel{stroke:#47505f;stroke-dasharray:5 9;stroke-width:2}#tree line.learned{stroke:#e3bd72;stroke-width:3.5}.sky-label{font:24px Georgia,serif;fill:#c9c3b3;text-anchor:middle;pointer-events:none}.sky-label.complete{fill:#a6efd1}.sky-provenance{line-height:1.8;color:#91a8b7}#skyJump{max-width:155px;background:#18232c;color:#edd5aa;padding:7px;border:1px solid #77634a}.tree-toolbar #treeSearch{width:145px}.tree-toolbar{flex-wrap:wrap}.tree-toolbar span{min-width:190px}
+
+.tree-toolbar #treeSearchStatus{min-width:2.5em;flex:0 0 auto}
+/* SVG nodes use their circular rim plus the shared cursor, not a second square outline. */
+#card #tree [data-node]:focus{outline:none!important;box-shadow:none!important}
+#tree [data-node]:focus>.rim{stroke:#a7f4ff;stroke-width:3}
+
+/* Scale star focus with the sky so zoomed-out selection cannot cover its neighbours. */
+#card #tree .node:focus>circle:first-child{stroke-width:3px!important;vector-effect:none;filter:none!important}
+#card #tree .node:focus .rim{stroke-width:2px!important;vector-effect:none}
+#card #tree .node:focus{filter:none}
+
+/* Keep route lines from cutting through star names. */
+#tree .sky-label{paint-order:stroke fill;stroke:#080f16;stroke-width:5;stroke-linejoin:round}

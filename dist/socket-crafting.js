@@ -1,0 +1,8 @@
+// Predictable upgrades coexist with the existing random colour/link rerolls.
+function socketUpgradePlan(slot,kind){let it=p?.[slot],def=EQUIPMENT[slot];if(!it||!def||!Array.isArray(it.sockets))return null;if(kind==='socket'){if(it.sockets.length>=def.sockets)return null;return{cost:80*(it.sockets.length+1),index:it.sockets.length}}if(kind==='link'){let index=it.links.findIndex(v=>!v);if(index<0)return null;return{cost:60*(index+1),index}}return null}
+function upgradeSocket(slot,kind){let plan=socketUpgradePlan(slot,kind);if(!plan)return false;if(p.gold<plan.cost){say('ゴールドが足りません');return false}let it=p[slot],oldGold=p.gold;p.gold-=plan.cost;
+ if(kind==='socket'){it.sockets.push({color:['R','G','B'][Math.floor(Math.random()*3)],gem:null});if(plan.index>0)it.links.push(false)}else it.links[plan.index]=true;
+ if(save()===false){p.gold=oldGold;if(kind==='socket'){it.sockets.pop();if(plan.index>0)it.links.pop()}else it.links[plan.index]=false;say('保存できなかったため、錬成を取り消しました');return false}
+ panel('inventory');say(kind==='socket'?'ソケットを追加しました。既存のジェムとリンクは保持されます':'リンクを接続しました');return true;
+}
+function socketCraftButtons(slot){let it=p[slot],max=EQUIPMENT[slot].sockets;if(!max)return '';let socket=socketUpgradePlan(slot,'socket'),link=socketUpgradePlan(slot,'link');return '<div class="socket-upgrades"><small>ソケット '+it.sockets.length+' / '+max+' · 拡張時の新しい穴は未接続</small>'+(socket?'<button onclick="upgradeSocket(\''+slot+'\',\'socket\')" '+(p.gold<socket.cost?'disabled':'')+'>ソケット +1 / '+socket.cost+'G</button>':'<small>ソケット上限に到達</small>')+(link?' <button onclick="upgradeSocket(\''+slot+'\',\'link\')" '+(p.gold<link.cost?'disabled':'')+'>未接続リンクを1つ接続 / '+link.cost+'G</button>':'<small>すべてのソケットが接続済み</small>')+'</div>'}

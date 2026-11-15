@@ -1,0 +1,48 @@
+ASHEN DEPTHS — Audio credits and licensing
+Checked: 2026-11-14
+
+All three recordings below are distributed under CC0 1.0 Universal on their
+individual author upload pages. They are bundled locally, not hotlinked.
+License: https://creativecommons.org/publicdomain/zero/1.0/
+Legal code: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+CC0 permits copying, modification, distribution and commercial use. Attribution
+is not required by CC0; we retain these credits voluntarily. No endorsement by
+the authors is claimed. CC0 does not grant trademark or publicity rights.
+
+1. Great Labyrinth (Orchestral dungeon music) — MintoDog
+   Use: exploration music
+   Source: https://opengameart.org/content/great-labyrinthorchestral-dungeon-music
+   Original: https://opengameart.org/sites/default/files/great_labyrinth_bpm160_0.ogg
+   Local: assets/audio/great-labyrinth.ogg
+
+2. Fairy Battles — MintoDog
+   Use: ordinary combat music
+   Source: https://opengameart.org/content/fairy-battles
+   Original: https://opengameart.org/sites/default/files/fairy_battles_bpm180_0.ogg
+   Local: assets/audio/fairy-battles.ogg
+
+3. The Final Battle — skrjablin
+   Use: boss combat music
+   Source: https://opengameart.org/content/the-final-battle
+   Original: https://opengameart.org/sites/default/files/the_final_battle.ogg
+   Local: assets/audio/final-battle.ogg
+   Author notes an audible pause at the loop boundary; this is retained.
+
+Changes: filenames changed only; original Ogg recordings are otherwise unedited.
+Playback adds volume control, scene crossfades, looping and temporary ducking.
+
+
+Recorded regional/village music (replaces all runtime-synthesized BGM):
+Alexander Ehlers — Free Music Pack (2013), seven tracks, CC0-1.0.
+Source: https://opengameart.org/content/free-music-pack
+Original archive: https://opengameart.org/sites/default/files/Alexander%20Ehlers%20-%20Free%20Music%20Pack.zip
+Author explicitly describes these tracks as music he composed. Original MP3 bytes retained; no AI music generation or runtime melody fallback.
+Doomed — assets/audio/ehlers-doomed.mp3
+Flags — assets/audio/ehlers-flags.mp3
+Great mission — assets/audio/ehlers-great-mission.mp3
+Spacetime — assets/audio/ehlers-spacetime.mp3
+Twists — assets/audio/ehlers-twists.mp3
+Waking the devil — assets/audio/ehlers-waking-the-devil.mp3
+Warped — assets/audio/ehlers-warped.mp3
+
+Sound effects remain procedural sound design; this replacement covers BGM.

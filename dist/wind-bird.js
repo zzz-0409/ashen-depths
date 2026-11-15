@@ -1,0 +1,22 @@
+// Circle a bounded distance, lock aim, then release three separate wind blades.
+function beginWindbirdVolley(e){let radius=Math.max(1,dist(e,p)),side=(e.windbirdCycle||0)%2?1:-1;e.windbirdCycle=(e.windbirdCycle||0)+1;e.state='attack';e.elapsed=0;e.struck=false;e.attack={pattern:'windbirdVolley',bespoke:true,windup:1.55,orbitTime:.7,orbitCenter:{x:p.x,y:p.y},orbitRadius:radius,orbitStart:Math.atan2(e.y-p.y,e.x-p.x),orbitAngle:Math.min(.65,120/radius)*side,orbitProgress:0};}
+const windbirdAnimateBase=animateEnemy;animateEnemy=(e,dt)=>{
+ if(e.species!=='r0e7')return windbirdAnimateBase(e,dt);if(e.hp<=0||e.reactionStun>0)return;
+ if(e.state!=='attack'&&e.t<=dt&&dist(e,p)<=380&&lineClear(e,p))beginWindbirdVolley(e);
+ let a=e.attack;if(a?.pattern!=='windbirdVolley')return windbirdAnimateBase(e,dt);
+ let previous=e.elapsed;e.elapsed+=dt;e.anim+=dt;e.flash=Math.max(0,(e.flash||0)-dt);e.slow=Math.max(0,(e.slow||0)-dt);
+ let orbit=(clamp(e.elapsed/a.orbitTime,0,1)-clamp(previous/a.orbitTime,0,1))*(e.slow>0?.35:1);
+ if(orbit>0&&!a.blocked){let steps=Math.max(1,Math.ceil(Math.abs(a.orbitAngle)*a.orbitRadius*orbit/5));for(let i=0;i<steps;i++){let progress=a.orbitProgress+orbit/steps,angle=a.orbitStart+a.orbitAngle*progress,target={x:a.orbitCenter.x+Math.cos(angle)*a.orbitRadius,y:a.orbitCenter.y+Math.sin(angle)*a.orbitRadius},before={x:e.x,y:e.y},dx=target.x-e.x,dy=target.y-e.y;moveActor(e,dx,dy,12);if(dist(e,target)>.1){e.x=before.x;e.y=before.y;a.blocked=true;break;}a.orbitProgress=progress;e.facing=dx-dy<0?-1:1;}}
+ if(e.elapsed>=a.orbitTime&&!a.origin){a.origin={x:e.x,y:e.y};a.target={x:p.x,y:p.y};a.angle=Math.atan2(p.y-e.y,p.x-e.x);e.facing=Math.cos(a.angle)-Math.sin(a.angle)<0?-1:1;}
+ if(e.elapsed>=a.windup&&!e.struck){e.struck=true;for(let i=-1;i<=1;i++){let angle=a.angle+i*.28;shots.push({x:e.x,y:e.y,vx:Math.cos(angle)*310,vy:Math.sin(angle)*310,damage:26,life:1.6,enemy:true,art:'windBlade'});}if(typeof playSound==='function')playSound('vortex',e.x,e.y);}
+ if(e.elapsed>=a.windup+.9){e.attack=null;e.state='idle';e.t=1.2;}
+};
+const windbirdSheet=new Image();windbirdSheet.assetSrc='assets/wind-bird-anim.png';
+const windbirdDrawBase=drawRegionEnemy;drawRegionEnemy=(e,size)=>{
+ if(e.species!=='r0e7')return windbirdDrawBase(e,size);let pos=project(e.x,e.y),a=e.attack,frame=spriteFrame(e.state,e.anim),lift=e.hp>0?9+Math.sin(e.anim*9)*3:0;
+ if(a?.pattern==='windbirdVolley')frame=e.elapsed<.7?{row:1,col:Math.floor(e.anim*10)%4}:{row:2,col:e.elapsed<1.1?0:e.elapsed<a.windup?1:e.elapsed<a.windup+.25?2:3};
+ ctx.save();ctx.translate(pos.x,pos.y);ctx.scale(e.facing||1,1);ctx.fillStyle='#0005';ctx.beginPath();ctx.ellipse(0,0,22,7,0,0,Math.PI*2);ctx.fill();if(windbirdSheet.complete&&windbirdSheet.naturalWidth){let sw=windbirdSheet.naturalWidth/4,sh=windbirdSheet.naturalHeight/3,w=122,h=w*sh/sw;ctx.filter=e.flash>0?'brightness(1.8)':'none';if(typeof drawPreparedEnemySprite==='function')drawPreparedEnemySprite(ctx,windbirdSheet,frame.col*sw,frame.row*sh,sw,sh,-w/2,-h*.9-lift,w,h);else ctx.drawImage(windbirdSheet,frame.col*sw,frame.row*sh,sw,sh,-w/2,-h*.9-lift,w,h);}ctx.restore();return true;
+};
+function drawWindBlade(s){let head=project(s.x,s.y),tail=project(s.x-s.vx*.05,s.y-s.vy*.05),angle=Math.atan2(head.y-tail.y,head.x-tail.x);ctx.save();ctx.globalCompositeOperation='source-over';ctx.translate(head.x,head.y-12);ctx.rotate(angle);ctx.fillStyle='#d5fff0cc';ctx.strokeStyle='#85d6bb';ctx.lineWidth=1;ctx.beginPath();for(let i=0;i<=16;i++){let t=-Math.PI/2+i*Math.PI/16,x=Math.cos(t)*12,y=Math.sin(t)*19;i?ctx.lineTo(x,y):ctx.moveTo(x,y);}for(let i=16;i>=0;i--){let t=-Math.PI/2+i*Math.PI/16;ctx.lineTo(Math.cos(t)*4,Math.sin(t)*19);}ctx.closePath();ctx.fill();ctx.stroke();ctx.strokeStyle='#b9ffe86b';ctx.beginPath();ctx.moveTo(-24,-6);ctx.lineTo(-8,-3);ctx.moveTo(-28,6);ctx.lineTo(-8,3);ctx.stroke();ctx.restore();}
+const windbirdGroundBase=drawGroundEffects;drawGroundEffects=()=>{windbirdGroundBase();for(let e of (typeof enemyRenderList==='function'?enemyRenderList('r0e7'):enemies)){let a=e.attack;if(e.species!=='r0e7'||e.hp<=0||a?.pattern!=='windbirdVolley'||!a.origin||e.struck||!visibleAt(e.x,e.y))continue;ctx.save();ctx.strokeStyle='#a6ead4';ctx.lineWidth=1.5;ctx.setLineDash([7,6]);for(let i=-1;i<=1;i++){let angle=a.angle+i*.28,from=project(a.origin.x,a.origin.y),to=project(a.origin.x+Math.cos(angle)*496,a.origin.y+Math.sin(angle)*496);ctx.beginPath();ctx.moveTo(from.x,from.y);ctx.lineTo(to.x,to.y);ctx.stroke();}ctx.restore();}};
+

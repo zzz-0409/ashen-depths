@@ -1,0 +1,20 @@
+/* The gem alone is clipped; the RGB label and keyboard/controller focus remain outside. */
+.socket{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;overflow:visible}
+.socket>.generated-art,.socket>.gem-icon,.socket>svg{width:28px!important;height:28px!important;max-width:100%;max-height:100%;margin:0!important;flex:0 0 auto;border-radius:50%;overflow:hidden;box-sizing:border-box}
+.socket .generated-art>.generated-art-fallback{inset:0!important;width:100%!important;height:100%!important;border:0!important;border-radius:50%;background:transparent}
+.socket .generated-art-paint{border-radius:50%}
+/* Equipment rarity and material quality retain the game's existing meanings. */
+[data-item-rarity="normal"],[data-material-tier="0"]{--rarity-rgb:159,169,177}
+[data-item-rarity="magic"],[data-material-tier="2"]{--rarity-rgb:78,151,235}
+[data-item-rarity="rare"],[data-material-tier="3"]{--rarity-rgb:235,181,65}
+[data-material-tier="1"]{--rarity-rgb:96,187,121}
+.generated-art:is([data-item-rarity],[data-material-tier]){background:radial-gradient(ellipse at top,rgba(var(--rarity-rgb),.8),rgba(var(--rarity-rgb),.22));border:2px solid rgb(var(--rarity-rgb));box-sizing:border-box}
+.generated-art:is([data-item-rarity],[data-material-tier])>.generated-art-paint{inset:4px;border-radius:2px}
+:is(.icon-entry,.gearcard,.stash-item):has([data-item-rarity="normal"]),:is(.material-tile,.icon-entry):has([data-material-tier="0"]){--tile-rarity:159,169,177}
+:is(.icon-entry,.gearcard,.stash-item):has([data-item-rarity="magic"]),:is(.material-tile,.icon-entry):has([data-material-tier="2"]){--tile-rarity:78,151,235}
+:is(.icon-entry,.gearcard,.stash-item):has([data-item-rarity="rare"]),:is(.material-tile,.icon-entry):has([data-material-tier="3"]){--tile-rarity:235,181,65}
+:is(.material-tile,.icon-entry):has([data-material-tier="1"]){--tile-rarity:96,187,121}
+:is(.icon-entry,.gearcard,.stash-item):has([data-item-rarity]),.material-tile:has([data-material-tier]){background:linear-gradient(145deg,rgba(var(--tile-rarity),.38),rgba(var(--tile-rarity),.09) 75%),#101821}
+.art-skills-ready .socket .art-skills.generated-skill>.generated-art-fallback,.art-flank-ready .socket .art-flank.generated-skill>.generated-art-fallback{inset:auto 0 0 auto!important;width:10px!important;height:10px!important;background:#08101de8}
+
+#card :is(.icon-entry,.gearcard,.stash-item,.material-tile)[class]:has([data-item-rarity],[data-material-tier]){background:linear-gradient(145deg,rgba(var(--tile-rarity),.38),rgba(var(--tile-rarity),.09) 75%),#101821!important}

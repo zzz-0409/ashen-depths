@@ -1,0 +1,15 @@
+// Transfer actual elemental marks from one enemy to nearby recipients.
+const ELEMENT_FERRY_SIGNATURE=['元素の渡し舟',24,5,'照準付近の敵1体から0.4秒後に付着属性を最大3種類取り出す。0.8秒後、取り出した地点から半径220以内の別の敵を近い順に最大3体、各100%で攻撃し、取り出した属性を追加付着させる。攻撃自体はジェムの属性。元の付着は消費するが継続ダメージは消さない。付着がなければ不発。取り出し・放出時に自分から500以内で射線が必要。取り出した付着は戻らない。','M8 31Q26 49 44 31L38 42H14ZM26 28V9M10 24L5 14M42 24L47 14M20 14L26 8L32 14'];
+SIGNATURE_SKILLS.push(ELEMENT_FERRY_SIGNATURE);
+Object.assign(GEM.crafted_2_2,{name:ELEMENT_FERRY_SIGNATURE[0],cost:24,cool:5,desc:ELEMENT_FERRY_SIGNATURE[3],ability:null,signature:82,tags:['spell','area']});
+SIGNATURE_AUDIO.push(['ferry',860,.35]);SKILL_AUDIO_FAMILIES.airy.add('ferry');
+function ferryMarkIds(e){return Object.entries(e?.elementMarks||{}).filter(([key,time])=>String(Number(key))===key&&Number.isInteger(Number(key))&&ELEMENTS[Number(key)]&&Number.isFinite(time)&&time>0).map(([key])=>Number(key)).slice(0,3);}
+const ferryCastBase=castCraftedSkill;castCraftedSkill=(build,...args)=>{let result=ferryCastBase(build,...args);if(GEM[build.type]?.signature!==82)return result;let s=signatureSpells.at(-1);if(s?.mode!==82)return result;s.owner=p;s.cargo=null;if(!s.target){signatureSpells=signatureSpells.filter(v=>v!==s);say('照準の近くに敵がいません');}return result;};
+const ferryStepBase=stepSignature;stepSignature=(s,dt)=>{
+ if(s.mode!==82)return ferryStepBase(s,dt);if(dead||p.hp<=0||s.owner!==p)return false;if(paused)return true;if(!Number.isFinite(dt)||dt<=0)return true;s.time=Math.round((s.time+dt)*1e6)/1e6;
+ if(s.cargo===null){let e=s.target;if(!e||e.hp<=0||!enemies.includes(e)||dist(p,e)>500||!lineClear(p,e))return false;s.x=e.x;s.y=e.y;if(s.time>=.4){s.cargo=ferryMarkIds(e);if(!s.cargo.length)return false;for(let id of s.cargo)delete e.elementMarks[id];playSignatureAudio(82,false,s.x,s.y);}}
+ if(s.time>=.8){if(dist(p,s)>500||!lineClear(p,s))return false;let targets=enemies.filter(e=>e!==s.target&&e.hp>0&&dist(e,s)<=220*s.build.radius&&lineClear(s,e)).sort((a,b)=>dist(a,s)-dist(b,s)).slice(0,3);for(let e of targets){spellHit(e,s.damage,s.build);if(e.hp>0)applyElements(e,s.cargo,s.damage);paintlessFerryLink(s,e);}playSignatureAudio(82,true,s.x,s.y);return false;}return true;
+};
+function paintlessFerryLink(from,to){zonesFx.push({kind:'bolt',x:from.x,y:from.y,tx:to.x,ty:to.y,life:.3,max:.3});burst(to.x,to.y,40,'#bfefff');}
+const ferryPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{ferryPaintBase();ctx.save();for(let s of signatureSpells){if(s.mode!==82||s.owner!==p||!visibleAt(s.x,s.y))continue;let ids=s.cargo||ferryMarkIds(s.target);groundRing(s.x,s.y,s.cargo?220*s.build.radius:50,'#bfefff',2);for(let [i,id]of ids.entries()){let a=s.time*3+i*Math.PI*2/ids.length,at={x:s.x+Math.cos(a)*40,y:s.y+Math.sin(a)*40},q=project(at.x,at.y);glowAt({x:q.x,y:q.y-35},12,ELEMENTS[id].color,.8);}}ctx.restore();};
+const ferryStatusBase=controlSkillStatus;controlSkillStatus=s=>s.mode===82?{label:s.cargo?'元素を移送 '+s.cargo.length+'種類':'付着属性を取り出す',value:Math.min(1,s.time/.8),waiting:true}:ferryStatusBase(s);

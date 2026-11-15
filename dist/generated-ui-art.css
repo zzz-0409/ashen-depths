@@ -1,0 +1,178 @@
+.generated-art{position:relative;display:inline-block;width:64px;height:64px;flex:none;vertical-align:middle;overflow:hidden;border-radius:4px;isolation:isolate}.generated-art-paint{position:absolute;inset:0;display:none;background-position:var(--art-x) var(--art-y);background-repeat:no-repeat}.art-equipment .generated-art-paint{background-image:url('assets/equipment-icons-v1.png');background-size:600% 600%}.art-skills .generated-art-paint{background-image:url('assets/skill-icons-v1.png');background-size:800% 400%}.art-utility .generated-art-paint{background-image:url('assets/material-ui-icons-v1.png');background-size:400% 400%}.generated-art-fallback{position:absolute;inset:0;display:grid;place-items:center}.generated-art-fallback svg{width:100%!important;height:100%!important;max-width:100%;margin:0!important}.art-equipment-ready .art-equipment>.generated-art-paint,.art-skills-ready .art-skills>.generated-art-paint,.art-utility-ready .art-utility>.generated-art-paint{display:block}.art-equipment-ready .art-equipment>.generated-art-fallback,.art-utility-ready .art-utility>.generated-art-fallback{visibility:hidden}.art-skills-ready .art-skills.generated-skill>.generated-art-fallback{inset:auto 0 0 auto;width:25px;height:25px;background:#08101de8;border:1px solid #d5c29c;border-radius:3px}.generated-art-badge{position:absolute!important;bottom:0;left:0;font:bold 10px/1.4 sans-serif!important;background:#07121be8;color:#ffebbe;padding:1px 3px;margin:0!important}.generated-material{width:48px;height:48px;border:1px solid #929b9b}.generated-material.tier-1{border-color:#81bdc7}.generated-material.tier-2{border-color:#af94e3}.generated-material.tier-3{border-color:#f4ce72}.generated-menu{width:52px;height:52px}.generated-equipment{width:76px;height:76px}.actions .generated-skill{width:42px;height:42px}.actions .generated-skill>.generated-art-fallback{width:15px;height:15px}.pickup-feed-icon .generated-material{width:30px;height:30px}.gemcard .generated-skill{width:48px;height:48px}#foundryGrid .generated-skill{width:56px;height:56px}.material-tile .generated-art{margin-right:0}.material-tile .generated-art-paint,.material-tile .generated-art-fallback{margin:0}.material-tile .generated-art-paint{display:none}.art-utility-ready .material-tile .generated-art-paint{display:block}
+
+.art-flank .generated-art-paint{background-image:url('assets/skill-flank-icon-v1.png');background-size:100% 100%}.art-flank-ready .art-flank>.generated-art-paint{display:block}.art-flank-ready .art-flank.generated-skill>.generated-art-fallback{inset:auto 0 0 auto;width:25px;height:25px;background:#08101de8;border:1px solid #d5c29c;border-radius:3px}.art-flank-ready .actions .art-flank.generated-skill>.generated-art-fallback{width:15px;height:15px}
+
+.art-support .generated-art-paint{background-image:url('assets/support-icons-v1.png');background-size:600% 400%}.art-support-ready .art-support>.generated-art-paint{display:block}.art-support-ready .art-support>.generated-art-fallback{visibility:hidden}
+
+.art-signature .generated-art-paint{background-image:url('assets/signature-icons-v1.png');background-size:400% 400%}.art-signature-ready .art-signature>.generated-art-paint{display:block}.art-signature-ready .art-signature>.generated-art-fallback{visibility:hidden}
+
+.art-signature2 .generated-art-paint{background-image:url('assets/melee-ward-icons-v1.png');background-size:400% 400%}.art-signature2-ready .art-signature2>.generated-art-paint{display:block}.art-signature2-ready .art-signature2>.generated-art-fallback{visibility:hidden}
+
+.art-signature3 .generated-art-paint{background-image:url('assets/link-boundary-icons-v1.png');background-size:400% 400%}.art-signature3-ready .art-signature3>.generated-art-paint{display:block}.art-signature3-ready .art-signature3>.generated-art-fallback{visibility:hidden}
+
+.art-signature4 .generated-art-paint{background-image:url('assets/tactic-control-icons-v1.png');background-size:400% 400%}.art-signature4-ready .art-signature4>.generated-art-paint{display:block}.art-signature4-ready .art-signature4>.generated-art-fallback{visibility:hidden}
+
+.art-signature5 .generated-art-paint{background-image:url('assets/position-resource-icons-v1.png');background-size:400% var(--art-size-y,400%)}.art-signature5-ready .art-signature5>.generated-art-paint{display:block}.art-signature5-ready .art-signature5>.generated-art-fallback{visibility:hidden}
+
+.art-detonate .generated-art-paint{background-image:url('assets/skill-detonate-icon-v1.png');background-size:100% 100%}.art-detonate-ready .art-detonate>.generated-art-paint{display:block}.art-detonate-ready .art-detonate>.generated-art-fallback{visibility:hidden}
+
+.art-cup-ready .actions .cup-flask .bar-icon{background-image:url('assets/cup-flask-v1.png');background-size:100% 100%;background-position:center!important}.actions .cup-flask{border-color:#84cfe8}
+
+.art-starter .generated-art-paint{background-image:url('assets/starter-skill-icons-v1.png');background-size:400% 200%}.art-starter-ready .art-starter>.generated-art-paint{display:block}.art-starter-ready .art-starter>.generated-art-fallback{visibility:hidden}.art-starter-ready .actions button[onclick="cast(3)"] .bar-icon{background-image:url('assets/starter-skill-icons-v1.png');background-size:400% 200%;background-position:100% 100%!important}
+
+.art-jobs .generated-art-paint{background-image:url('assets/job-emblems-v1.png');background-size:400% 400%}.art-jobs-ready .art-jobs>.generated-art-paint{display:block}.art-jobs-ready .art-jobs>.generated-art-fallback{visibility:hidden}.generated-job{width:44px;height:44px;pointer-events:none}.job-hall button,.job-guide-picker button{display:flex;align-items:center;gap:8px;text-align:left;min-width:0}.job-hall button>span:last-child,.job-guide-picker button>span:last-child{min-width:0;overflow-wrap:anywhere}.job-detail h3,.job-guide-heading h3{display:flex;align-items:center;gap:12px}.job-detail h3 .generated-job,.job-guide-heading h3 .generated-job{width:64px;height:64px}.job-guide-picker .generated-job{width:36px;height:36px}
+
+.art-timing .generated-art-paint{background-image:url('assets/skill-timing-icon-v1.png');background-size:100% 100%}.art-timing-ready .art-timing>.generated-art-paint{display:block}.art-timing-ready .art-timing>.generated-art-fallback{visibility:hidden}
+
+.art-grassbeast .generated-art-paint{background-image:url('assets/grass-beast-materials-v1.png');background-size:400% 400%}.art-grassbeast-ready .art-grassbeast>.generated-art-paint,.art-grassbeast-ready .material-tile .art-grassbeast>.generated-art-paint{display:block}.art-grassbeast-ready .art-grassbeast>.generated-art-fallback{visibility:hidden}
+
+.art-grassother .generated-art-paint{background-image:url('assets/grass-other-materials-v1.png');background-size:400% 400%}.art-grassother-ready .art-grassother>.generated-art-paint,.art-grassother-ready .material-tile .art-grassother>.generated-art-paint{display:block}.art-grassother-ready .art-grassother>.generated-art-fallback{visibility:hidden}
+
+.art-grassboss .generated-art-paint{background-image:url('assets/grass-boss-materials-v1.png');background-size:400% 400%}.art-grassboss-ready .art-grassboss>.generated-art-paint,.art-grassboss-ready .material-tile .art-grassboss>.generated-art-paint{display:block}.art-grassboss-ready .art-grassboss>.generated-art-fallback{visibility:hidden}
+
+.art-ferry .generated-art-paint{background-image:url('assets/skill-element-ferry-v1.png');background-size:100% 100%}.art-ferry-ready .art-ferry>.generated-art-paint{display:block}.art-ferry-ready .art-ferry>.generated-art-fallback{visibility:hidden}
+
+.art-forestbeast .generated-art-paint{background-image:url('assets/forest-beast-materials-v1.png');background-size:400% 400%}.art-forestbeast-ready .art-forestbeast>.generated-art-paint,.art-forestbeast-ready .material-tile .art-forestbeast>.generated-art-paint{display:block}.art-forestbeast-ready .art-forestbeast>.generated-art-fallback{visibility:hidden}
+
+.art-forestother .generated-art-paint{background-image:url('assets/forest-other-materials-v1.png');background-size:400% 400%}.art-forestother-ready .art-forestother>.generated-art-paint,.art-forestother-ready .material-tile .art-forestother>.generated-art-paint{display:block}.art-forestother-ready .art-forestother>.generated-art-fallback{visibility:hidden}
+
+.art-forestboss .generated-art-paint{background-image:url('assets/forest-boss-materials-v1.png');background-size:400% 400%}.art-forestboss-ready .art-forestboss>.generated-art-paint,.art-forestboss-ready .material-tile .art-forestboss>.generated-art-paint{display:block}.art-forestboss-ready .art-forestboss>.generated-art-fallback{visibility:hidden}
+
+.art-cavebeast .generated-art-paint{background-image:url('assets/cave-beast-materials-v1.png');background-size:400% 400%}.art-cavebeast-ready .art-cavebeast>.generated-art-paint,.art-cavebeast-ready .material-tile .art-cavebeast>.generated-art-paint{display:block}.art-cavebeast-ready .art-cavebeast>.generated-art-fallback{visibility:hidden}
+
+.art-caveother .generated-art-paint{background-image:url('assets/cave-other-materials-v1.png');background-size:400% 400%}.art-caveother-ready .art-caveother>.generated-art-paint,.art-caveother-ready .material-tile .art-caveother>.generated-art-paint{display:block}.art-caveother-ready .art-caveother>.generated-art-fallback{visibility:hidden}
+
+.art-caveboss .generated-art-paint{background-image:url('assets/cave-boss-materials-v1.png');background-size:400% 400%}.art-caveboss-ready .art-caveboss>.generated-art-paint,.art-caveboss-ready .material-tile .art-caveboss>.generated-art-paint{display:block}.art-caveboss-ready .art-caveboss>.generated-art-fallback{visibility:hidden}
+
+.art-swampbeast .generated-art-paint{background-image:url('assets/swamp-beast-materials-v1.png');background-size:400% 400%}.art-swampbeast-ready .art-swampbeast>.generated-art-paint,.art-swampbeast-ready .material-tile .art-swampbeast>.generated-art-paint{display:block}.art-swampbeast-ready .art-swampbeast>.generated-art-fallback{visibility:hidden}
+
+.art-swampother .generated-art-paint{background-image:url('assets/swamp-other-materials-v1.png');background-size:400% 400%}.art-swampother-ready .art-swampother>.generated-art-paint,.art-swampother-ready .material-tile .art-swampother>.generated-art-paint{display:block}.art-swampother-ready .art-swampother>.generated-art-fallback{visibility:hidden}
+
+.art-swampboss .generated-art-paint{background-image:url('assets/swamp-boss-materials-v1.png');background-size:400% 400%}.art-swampboss-ready .art-swampboss>.generated-art-paint,.art-swampboss-ready .material-tile .art-swampboss>.generated-art-paint{display:block}.art-swampboss-ready .art-swampboss>.generated-art-fallback{visibility:hidden}
+
+.art-desertbeast .generated-art-paint{background-image:url('assets/desert-beast-materials-v1.png');background-size:400% 400%}.art-desertbeast-ready .art-desertbeast>.generated-art-paint,.art-desertbeast-ready .material-tile .art-desertbeast>.generated-art-paint{display:block}.art-desertbeast-ready .art-desertbeast>.generated-art-fallback{visibility:hidden}
+
+.art-desertother .generated-art-paint{background-image:url('assets/desert-other-materials-v1.png');background-size:400% 400%}.art-desertother-ready .art-desertother>.generated-art-paint,.art-desertother-ready .material-tile .art-desertother>.generated-art-paint{display:block}.art-desertother-ready .art-desertother>.generated-art-fallback{visibility:hidden}
+
+.art-desertboss .generated-art-paint{background-image:url('assets/desert-boss-materials-v1.png');background-size:400% 400%}.art-desertboss-ready .art-desertboss>.generated-art-paint,.art-desertboss-ready .material-tile .art-desertboss>.generated-art-paint{display:block}.art-desertboss-ready .art-desertboss>.generated-art-fallback{visibility:hidden}
+
+.art-snowbeast .generated-art-paint{background-image:url('assets/snow-beast-materials-v1.png');background-size:400% 400%}.art-snowbeast-ready .art-snowbeast>.generated-art-paint,.art-snowbeast-ready .material-tile .art-snowbeast>.generated-art-paint{display:block}.art-snowbeast-ready .art-snowbeast>.generated-art-fallback{visibility:hidden}
+
+.art-snowother .generated-art-paint{background-image:url('assets/snow-other-materials-v1.png');background-size:400% 400%}.art-snowother-ready .art-snowother>.generated-art-paint,.art-snowother-ready .material-tile .art-snowother>.generated-art-paint{display:block}.art-snowother-ready .art-snowother>.generated-art-fallback{visibility:hidden}
+
+.art-snowboss .generated-art-paint{background-image:url('assets/snow-boss-materials-v1.png');background-size:400% 400%}.art-snowboss-ready .art-snowboss>.generated-art-paint,.art-snowboss-ready .material-tile .art-snowboss>.generated-art-paint{display:block}.art-snowboss-ready .art-snowboss>.generated-art-fallback{visibility:hidden}
+
+.art-highlandbeast .generated-art-paint{background-image:url('assets/highland-beast-materials-v1.png');background-size:400% 400%}.art-highlandbeast-ready .art-highlandbeast>.generated-art-paint,.art-highlandbeast-ready .material-tile .art-highlandbeast>.generated-art-paint{display:block}.art-highlandbeast-ready .art-highlandbeast>.generated-art-fallback{visibility:hidden}
+
+.art-highlandother .generated-art-paint{background-image:url('assets/highland-other-materials-v1.png');background-size:400% 400%}.art-highlandother-ready .art-highlandother>.generated-art-paint,.art-highlandother-ready .material-tile .art-highlandother>.generated-art-paint{display:block}.art-highlandother-ready .art-highlandother>.generated-art-fallback{visibility:hidden}
+
+.art-highlandboss .generated-art-paint{background-image:url('assets/highland-boss-materials-v1.png');background-size:400% 400%}.art-highlandboss-ready .art-highlandboss>.generated-art-paint,.art-highlandboss-ready .material-tile .art-highlandboss>.generated-art-paint{display:block}.art-highlandboss-ready .art-highlandboss>.generated-art-fallback{visibility:hidden}
+
+.art-volcanobeast .generated-art-paint{background-image:url('assets/volcano-beast-materials-v1.png');background-size:400% 400%}.art-volcanobeast-ready .art-volcanobeast>.generated-art-paint,.art-volcanobeast-ready .material-tile .art-volcanobeast>.generated-art-paint{display:block}.art-volcanobeast-ready .art-volcanobeast>.generated-art-fallback{visibility:hidden}
+
+.art-volcanoother .generated-art-paint{background-image:url('assets/volcano-other-materials-v1.png');background-size:400% 400%}.art-volcanoother-ready .art-volcanoother>.generated-art-paint,.art-volcanoother-ready .material-tile .art-volcanoother>.generated-art-paint{display:block}.art-volcanoother-ready .art-volcanoother>.generated-art-fallback{visibility:hidden}
+
+.art-volcanoboss .generated-art-paint{background-image:url('assets/volcano-boss-materials-v1.png');background-size:400% 400%}.art-volcanoboss-ready .art-volcanoboss>.generated-art-paint,.art-volcanoboss-ready .material-tile .art-volcanoboss>.generated-art-paint{display:block}.art-volcanoboss-ready .art-volcanoboss>.generated-art-fallback{visibility:hidden}
+
+.art-coastbeast .generated-art-paint{background-image:url('assets/coast-beast-materials-v1.png');background-size:400% 400%}
+.art-coastbeast-ready .art-coastbeast>.generated-art-paint,.art-coastbeast-ready .material-tile .art-coastbeast>.generated-art-paint{display:block}
+.art-coastbeast-ready .art-coastbeast>.generated-art-fallback{visibility:hidden}
+.art-coastother .generated-art-paint{background-image:url('assets/coast-other-materials-v1.png');background-size:400% 400%}
+.art-coastother-ready .art-coastother>.generated-art-paint,.art-coastother-ready .material-tile .art-coastother>.generated-art-paint{display:block}
+.art-coastother-ready .art-coastother>.generated-art-fallback{visibility:hidden}
+.art-coastboss .generated-art-paint{background-image:url('assets/coast-boss-materials-v1.png');background-size:400% 400%}
+.art-coastboss-ready .art-coastboss>.generated-art-paint,.art-coastboss-ready .material-tile .art-coastboss>.generated-art-paint{display:block}
+.art-coastboss-ready .art-coastboss>.generated-art-fallback{visibility:hidden}
+
+.art-ruinsbeast .generated-art-paint{background-image:url('assets/ruins-beast-materials-v1.png');background-size:400% 400%}
+.art-ruinsbeast-ready .art-ruinsbeast>.generated-art-paint,.art-ruinsbeast-ready .material-tile .art-ruinsbeast>.generated-art-paint{display:block}
+.art-ruinsbeast-ready .art-ruinsbeast>.generated-art-fallback{visibility:hidden}
+.art-ruinsother .generated-art-paint{background-image:url('assets/ruins-other-materials-v1.png');background-size:400% 400%}
+.art-ruinsother-ready .art-ruinsother>.generated-art-paint,.art-ruinsother-ready .material-tile .art-ruinsother>.generated-art-paint{display:block}
+.art-ruinsother-ready .art-ruinsother>.generated-art-fallback{visibility:hidden}
+.art-ruinsboss .generated-art-paint{background-image:url('assets/ruins-boss-materials-v1.png');background-size:400% 400%}
+.art-ruinsboss-ready .art-ruinsboss>.generated-art-paint,.art-ruinsboss-ready .material-tile .art-ruinsboss>.generated-art-paint{display:block}
+.art-ruinsboss-ready .art-ruinsboss>.generated-art-fallback{visibility:hidden}
+
+.art-gravebeast .generated-art-paint{background-image:url('assets/grave-beast-materials-v1.png');background-size:400% 400%}
+.art-gravebeast-ready .art-gravebeast>.generated-art-paint,.art-gravebeast-ready .material-tile .art-gravebeast>.generated-art-paint{display:block}
+.art-gravebeast-ready .art-gravebeast>.generated-art-fallback{visibility:hidden}
+.art-graveother .generated-art-paint{background-image:url('assets/grave-other-materials-v1.png');background-size:400% 400%}
+.art-graveother-ready .art-graveother>.generated-art-paint,.art-graveother-ready .material-tile .art-graveother>.generated-art-paint{display:block}
+.art-graveother-ready .art-graveother>.generated-art-fallback{visibility:hidden}
+.art-graveboss .generated-art-paint{background-image:url('assets/grave-boss-materials-v1.png');background-size:400% 400%}
+.art-graveboss-ready .art-graveboss>.generated-art-paint,.art-graveboss-ready .material-tile .art-graveboss>.generated-art-paint{display:block}
+.art-graveboss-ready .art-graveboss>.generated-art-fallback{visibility:hidden}
+
+.art-riftbeast .generated-art-paint{background-image:url('assets/rift-beast-materials-v1.png');background-size:400% 400%}
+.art-riftbeast-ready .art-riftbeast>.generated-art-paint,.art-riftbeast-ready .material-tile .art-riftbeast>.generated-art-paint{display:block}
+.art-riftbeast-ready .art-riftbeast>.generated-art-fallback{visibility:hidden}
+.art-riftother .generated-art-paint{background-image:url('assets/rift-other-materials-v1.png');background-size:400% 400%}
+.art-riftother-ready .art-riftother>.generated-art-paint,.art-riftother-ready .material-tile .art-riftother>.generated-art-paint{display:block}
+.art-riftother-ready .art-riftother>.generated-art-fallback{visibility:hidden}
+.art-riftboss .generated-art-paint{background-image:url('assets/rift-boss-materials-v1.png');background-size:400% 400%}
+.art-riftboss-ready .art-riftboss>.generated-art-paint,.art-riftboss-ready .material-tile .art-riftboss>.generated-art-paint{display:block}
+.art-riftboss-ready .art-riftboss>.generated-art-fallback{visibility:hidden}
+
+.art-secretfirst .generated-art-paint{background-image:url('assets/secret-first-materials-v1.png');background-size:400% 400%}
+.art-secretfirst-ready .art-secretfirst>.generated-art-paint,.art-secretfirst-ready .material-tile .art-secretfirst>.generated-art-paint{display:block}
+.art-secretfirst-ready .art-secretfirst>.generated-art-fallback{visibility:hidden}
+.art-secretmiddle .generated-art-paint{background-image:url('assets/secret-middle-materials-v1.png');background-size:400% 400%}
+.art-secretmiddle-ready .art-secretmiddle>.generated-art-paint,.art-secretmiddle-ready .material-tile .art-secretmiddle>.generated-art-paint{display:block}
+.art-secretmiddle-ready .art-secretmiddle>.generated-art-fallback{visibility:hidden}
+.art-secretlast .generated-art-paint{background-image:url('assets/secret-last-materials-v1.png');background-size:400% 400%}
+.art-secretlast-ready .art-secretlast>.generated-art-paint,.art-secretlast-ready .material-tile .art-secretlast>.generated-art-paint{display:block}
+.art-secretlast-ready .art-secretlast>.generated-art-fallback{visibility:hidden}
+
+.art-exfirst .generated-art-paint{background-image:url('assets/ex-first-materials-v1.png');background-size:400% 400%}
+.art-exfirst-ready .art-exfirst>.generated-art-paint,.art-exfirst-ready .material-tile .art-exfirst>.generated-art-paint{display:block}
+.art-exfirst-ready .art-exfirst>.generated-art-fallback{visibility:hidden}
+.art-exsecond .generated-art-paint{background-image:url('assets/ex-second-materials-v1.png');background-size:400% 400%}
+.art-exsecond-ready .art-exsecond>.generated-art-paint,.art-exsecond-ready .material-tile .art-exsecond>.generated-art-paint{display:block}
+.art-exsecond-ready .art-exsecond>.generated-art-fallback{visibility:hidden}
+.art-exfinal .generated-art-paint{background-image:url('assets/ex-final-materials-v1.png');background-size:400% 200%}
+.art-exfinal-ready .art-exfinal>.generated-art-paint,.art-exfinal-ready .material-tile .art-exfinal>.generated-art-paint{display:block}
+.art-exfinal-ready .art-exfinal>.generated-art-fallback{visibility:hidden}
+
+.art-gear123 .generated-art-paint{background-image:url('assets/gear123-icons-v1.png');background-size:600% 600%}
+.art-gear123-ready .art-gear123>.generated-art-paint{display:block}
+.art-gear123-ready .art-gear123>.generated-art-fallback{visibility:hidden}
+.art-gear456 .generated-art-paint{background-image:url('assets/gear456-icons-v1.png');background-size:600% 600%}
+.art-gear456-ready .art-gear456>.generated-art-paint{display:block}
+.art-gear456-ready .art-gear456>.generated-art-fallback{visibility:hidden}
+.art-gear789 .generated-art-paint{background-image:url('assets/gear789-icons-v1.png');background-size:600% 600%}
+.art-gear789-ready .art-gear789>.generated-art-paint{display:block}
+.art-gear789-ready .art-gear789>.generated-art-fallback{visibility:hidden}
+.art-gear10 .generated-art-paint{background-image:url('assets/gear10-icons-v1.png');background-size:400% var(--art-size-y,300%)}
+.art-gear10-ready .art-gear10>.generated-art-paint{display:block}
+.art-gear10-ready .art-gear10>.generated-art-fallback{visibility:hidden}
+
+.art-navigation .generated-art-paint{background-image:url('assets/navigation-icons-v1.png');background-size:500% 400%}.art-navigation-ready .art-navigation>.generated-art-paint{display:block}.art-navigation-ready .art-navigation>.generated-art-fallback{visibility:hidden}
+
+.art-pursuitchain .generated-art-paint{background-image:url('assets/skill-pursuit-chain-v1.png');background-size:100% 100%}.art-pursuitchain-ready .art-pursuitchain>.generated-art-paint{display:block}.art-pursuitchain-ready .art-pursuitchain>.generated-art-fallback{visibility:hidden}
+/* Keep generated skill silhouettes recognizable while cooldown is active. */
+.actions .bar-icon.ability-bar-icon>.generated-skill{width:100%;height:100%;border-radius:0}
+.actions button::after{background:#02050b70}
+.actions small{padding:1px 3px;border-radius:2px;background:#07101de6;color:#fff0c9;font-variant-numeric:tabular-nums}
+.art-quadrant .generated-art-paint{background-image:url('assets/skill-quadrant-v1.png');background-size:100% 100%}.art-quadrant-ready .art-quadrant>.generated-art-paint{display:block}.art-quadrant-ready .art-quadrant>.generated-art-fallback{visibility:hidden}
+
+.art-orbitwalk .generated-art-paint{background-image:url('assets/skill-orbit-walk-v1.png');background-size:100% 100%}.art-orbitwalk-ready .art-orbitwalk>.generated-art-paint{display:block}.art-orbitwalk-ready .art-orbitwalk>.generated-art-fallback{visibility:hidden}
+
+.art-overkill .generated-art-paint{background-image:url('assets/skill-overkill-icon-v1.png');background-size:100% 100%}.art-overkill-ready .art-overkill>.generated-art-paint{display:block}.art-overkill-ready .art-overkill>.generated-art-fallback{visibility:hidden}
+
+.art-timeloan .generated-art-paint{background-image:url('assets/skill-time-loan-icon-v1.png');background-size:100% 100%}.art-timeloan-ready .art-timeloan>.generated-art-paint{display:block}.art-timeloan-ready .art-timeloan>.generated-art-fallback{visibility:hidden}
+
+.art-spelllock .generated-art-paint{background-image:url('assets/skill-spelllock-icon-v1.png');background-size:100% 100%}.art-spelllock-ready .art-spelllock>.generated-art-paint{display:block}.art-spelllock-ready .art-spelllock>.generated-art-fallback{visibility:hidden}
+
+.art-rewindanchor .generated-art-paint{background-image:url('assets/skill-rewind-anchor-icon-v1.png');background-size:100% 100%}.art-rewindanchor-ready .art-rewindanchor>.generated-art-paint{display:block}.art-rewindanchor-ready .art-rewindanchor>.generated-art-fallback{visibility:hidden}
+
+.art-balanceverdict .generated-art-paint{background-image:url('assets/skill-balance-verdict-icon-v1.png');background-size:100% 100%}.art-balanceverdict-ready .art-balanceverdict>.generated-art-paint{display:block}.art-balanceverdict-ready .art-balanceverdict>.generated-art-fallback{visibility:hidden}
+
+.art-twincircle .generated-art-paint{background-image:url('assets/skill-twin-circle-icon-v1.png');background-size:100% 100%}.art-twincircle-ready .art-twincircle>.generated-art-paint{display:block}.art-twincircle-ready .art-twincircle>.generated-art-fallback{visibility:hidden}
+
+.art-partingchain .generated-art-paint{background-image:url('assets/skill-parting-chain-icon-v1.png');background-size:100% 100%}.art-partingchain-ready .art-partingchain>.generated-art-paint{display:block}.art-partingchain-ready .art-partingchain>.generated-art-fallback{visibility:hidden}
+
+
+.art-grazehalo .generated-art-paint{background-image:url('assets/skill-graze-ring-icon-v1.png');background-size:100% 100%}.art-grazehalo-ready .art-grazehalo>.generated-art-paint{display:block}.art-grazehalo-ready .art-grazehalo>.generated-art-fallback{visibility:hidden}
+
+.art-spellbreaker .generated-art-paint{background-image:url('assets/skill-spellbreaker-icon-v1.png');background-size:100% 100%}.art-spellbreaker-ready .art-spellbreaker>.generated-art-paint{display:block}.art-spellbreaker-ready .art-spellbreaker>.generated-art-fallback{visibility:hidden}

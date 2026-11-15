@@ -1,0 +1,13 @@
+// Eight-frame generated time-transfer effect. No combat state is changed by painting.
+const timeLoanVfxSheet=new Image();timeLoanVfxSheet.assetSrc='assets/time-loan-vfx-v1.png';BASE_GAME_IMAGES.push(timeLoanVfxSheet);GAME_IMAGES.push(timeLoanVfxSheet);
+let timeLoanVfx=[],timeLoanVfxOwner=null;
+function resetTimeLoanVfx(){timeLoanVfx=[];timeLoanVfxOwner=p;}
+function addTimeLoanVfx(x,y,impact=false){if(timeLoanVfxOwner!==p)resetTimeLoanVfx();if(!started||paused||dead||presentationPrefs.reduced||!Number.isFinite(x)||!Number.isFinite(y))return;let limit=effectQuality==='low'?1:2;while(timeLoanVfx.length>=limit)timeLoanVfx.shift();timeLoanVfx.push({x,y,time:0,duration:.65,size:impact?180:150});}
+function stepTimeLoanVfx(dt){if(timeLoanVfxOwner!==p||!started||dead||presentationPrefs.reduced){resetTimeLoanVfx();return;}if(paused||!Number.isFinite(dt)||dt<=0)return;for(let e of timeLoanVfx)e.time+=dt;timeLoanVfx=timeLoanVfx.filter(e=>e.time<e.duration).slice(-(effectQuality==='low'?1:2));}
+function paintTimeLoanVfx(){if(!started||dead||presentationPrefs.reduced||timeLoanVfxOwner!==p||!timeLoanVfxSheet.complete||!timeLoanVfxSheet.naturalWidth||!timeLoanVfxSheet.naturalHeight)return;let light=effectQuality==='low',sw=timeLoanVfxSheet.naturalWidth/4,sh=timeLoanVfxSheet.naturalHeight/2,limit=light?1:2;for(let e of timeLoanVfx.slice(-limit)){if(!visibleAt(e.x,e.y))continue;let q=project(e.x,e.y),size=e.size;if(q.x<-size||q.x>W+size||q.y<-size||q.y>H+size)continue;let t=Math.min(1,e.time/e.duration),frame=light?Math.min(3,Math.floor(t*4))*2:Math.min(7,Math.floor(t*8));ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=1-t*.2;ctx.drawImage(timeLoanVfxSheet,(frame%4)*sw,Math.floor(frame/4)*sh,sw,sh,q.x-size/2,q.y-45-size/2,size,size);ctx.restore();}}
+const timeLoanVfxCastBase=castCraftedSkill;castCraftedSkill=(b,...args)=>{let before=signatureSpells.at(-1),result=timeLoanVfxCastBase(b,...args),s=signatureSpells.at(-1);if(b.type==='crafted_2_7'&&s!==before&&s?.mode===87)addTimeLoanVfx(p.x,p.y);return result;};
+const timeLoanVfxHitBase=spellHit;spellHit=(e,d,b)=>{let hp=e?.hp,hits=e?.trainingHits||0,result=timeLoanVfxHitBase(e,d,b);if(b?.type==='crafted_2_7'&&!e?.dotTick&&(e.hp<hp||(e.trainingHits||0)>hits))addTimeLoanVfx(e.x,e.y,true);return result;};
+const timeLoanVfxUpdateBase=update;update=dt=>{stepTimeLoanVfx(dt);return timeLoanVfxUpdateBase(dt);};
+const timeLoanVfxDrawBase=drawEffects;drawEffects=()=>{paintTimeLoanVfx();return timeLoanVfxDrawBase();};
+const timeLoanVfxWorldBase=loadWorld;loadWorld=(...args)=>{resetTimeLoanVfx();return timeLoanVfxWorldBase(...args);};
+const timeLoanVfxDummyBase=clearDummy;clearDummy=(...args)=>{resetTimeLoanVfx();return timeLoanVfxDummyBase(...args);};

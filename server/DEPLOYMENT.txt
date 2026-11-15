@@ -1,0 +1,50 @@
+Google account ranking backend (prepared, not deployed)
+
+Entry: server/index.mjs (Worker ES module)
+Static frontend: dist/ (ASSETS binding)
+Structured storage: D1 binding DB
+Schema: server/migrations/0001_ranking.sql
+Runtime variable: GOOGLE_CLIENT_ID (public Google OAuth web client ID)
+Origin: https://ashen-depths-nov13.tsryt200649.chatgpt.site
+
+The existing Site still uses static hosting. Its approved production migration
+must provision DB, apply the SQL migration, bundle the Worker entry and attach
+the existing frontend assets. Do not describe the API as live until deployed.
+Do not enable authentication with an example or invented client ID.
+
+Google Identity Services is loaded only when the visitor selects Google login.
+JWT signature, issuer, audience, expiry, issued-at and nonce are checked server-side.
+Google subject IDs are SHA-256 keyed internally; leaderboard names are generated
+pseudonyms. Google names, email addresses and raw JWTs are not stored in D1.
+Sessions use HttpOnly/SameSite cookies and POST requests require the same origin.
+
+Each account receives a timed, single-use 30-second run ticket. Best/last/rank
+are stored per balance season. Submitted damage is client-measured: this is a
+casual leaderboard, not a server-simulated competitive/anti-cheat system.
+Character equipment/progression remains browser-local; login does not yet sync
+characters across devices. The shared DPS scores are separate from local saves.
+
+Verification: node tests/ranking.mjs uses real RSA signatures and an in-memory
+SQLite database through a D1-compatible adapter. Real Google login and hosted
+D1 are still required for the production integration test.
+
+Village multiplayer integration (2026-11-15, not deployed)
+
+User scope: maximum4 players meet and move in the same village. Exploration remains individual.
+Worker entry now routes party endpoints before the existing ranking API.
+Durable Object export: PartyRoomObject; binding: PARTY_ROOMS.
+Schema additionally requires server/migrations/0002_party.sql.
+wrangler.jsonc declares static assets, API-first routes and the object migration.
+D1 DB binding and GOOGLE_CLIENT_ID must be provisioned before party/config.ready is true.
+No example database ID or Google ID has been substituted.
+Run node scripts/stamp-release.cjs and node scripts/verify-server-release.cjs before deployment; the stamp synchronizes server/game-release.mjs with dist/release.json.
+The client/UI modules are bundled in dist/village-party.js; dist/village-party-runtime.js connects village/pause menus, movement, remote actors and controller actions. Pages-only hosting displays an unavailable/setup message because the API is absent.
+The local logout button closes its village connection. Other already-open connections currently expire with the login lifetime; immediate server-side revocation remains to integrate.
+Server tests: npm run verify:multiplayer:server. Platform WebSocket/101 boundary is simulated in Node; hosted testing is still required.
+
+Release validation notes (2026-11-15)
+- Full regression for 6b505399 was intentionally stopped after independently confirming a village navigation regression. It did not pass.
+- The village navigation load-order regression is now fixed in navigation-performance.js and covered by tests/village-navigation-load-order.cjs. Revalidate and stamp the changed release before packaging or deployment.
+- Shared local movement currently follows 20Hz server snapshots. Real latency, visual smoothness, physical controllers, reconnect behavior and four-browser operation still require hosted/browser validation.
+- Shared-village users have independent combat, quests, loot and progression; this is not cooperative exploration.
+- Never claim static Pages alone enables Google login, shared rankings or village rooms.

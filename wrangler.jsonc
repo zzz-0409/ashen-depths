@@ -1,0 +1,14 @@
+{
+  "name": "ashen-depths",
+  "main": "server/index.mjs",
+  "compatibility_date": "2026-11-15",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "durable_objects": {
+    "bindings": [{"name": "PARTY_ROOMS", "class_name": "PartyRoomObject"}]
+  },
+  "migrations": [{"tag": "v1-party", "new_sqlite_classes": ["PartyRoomObject"]}]
+}

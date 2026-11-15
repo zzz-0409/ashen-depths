@@ -1,0 +1,86 @@
+[
+  {
+    "name": "great-labyrinth.ogg",
+    "bytes": 3927574,
+    "sha256": "0ff2f4830a23bd0075cd4d5d124e6a79f1a547dddc0faf6fb660c98c95545a3e",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14"
+  },
+  {
+    "name": "fairy-battles.ogg",
+    "bytes": 3174513,
+    "sha256": "3cb573bdd9ea449f8851d3249fa1ec1a8d0d843cbabcdfb060e97a3c132f0cde",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14"
+  },
+  {
+    "name": "final-battle.ogg",
+    "bytes": 2822466,
+    "sha256": "401fa62b9ed9bb2eea5821bdbe245e3eb991a89ecd1509c3742f7b5393b0df1c",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14"
+  },
+  {
+    "name": "ehlers-doomed.mp3",
+    "bytes": 6054016,
+    "sha256": "f5020d213035882854ac56ec083864e73407ceb67b3de25b0d3165c1a2ef82cf",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14",
+    "author": "Alexander Ehlers",
+    "source": "https://opengameart.org/content/free-music-pack"
+  },
+  {
+    "name": "ehlers-flags.mp3",
+    "bytes": 3949631,
+    "sha256": "ab2216accc1876ddca7c5f59c404405d17af59abfda1467c88e7b3c45f35c5c3",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14",
+    "author": "Alexander Ehlers",
+    "source": "https://opengameart.org/content/free-music-pack"
+  },
+  {
+    "name": "ehlers-great-mission.mp3",
+    "bytes": 4745843,
+    "sha256": "651b9a20e24bfa78a6b508367e32193a42dc6d33790cf5797d4f8836aafbc220",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14",
+    "author": "Alexander Ehlers",
+    "source": "https://opengameart.org/content/free-music-pack"
+  },
+  {
+    "name": "ehlers-spacetime.mp3",
+    "bytes": 4646578,
+    "sha256": "4d8aee2da93a980bcb351c327076931799ddde1d783cb1448257420bcf8d8c3a",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14",
+    "author": "Alexander Ehlers",
+    "source": "https://opengameart.org/content/free-music-pack"
+  },
+  {
+    "name": "ehlers-twists.mp3",
+    "bytes": 7206578,
+    "sha256": "649c6d0cc5355cb0f3aa4d795a745a8193b71286165081d53e766f54a2c0b45d",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14",
+    "author": "Alexander Ehlers",
+    "source": "https://opengameart.org/content/free-music-pack"
+  },
+  {
+    "name": "ehlers-waking-the-devil.mp3",
+    "bytes": 3231786,
+    "sha256": "28393c3a2d18eef7ca27d9e4327309625e2b03064a566527cac7fcf9bc341aa5",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14",
+    "author": "Alexander Ehlers",
+    "source": "https://opengameart.org/content/free-music-pack"
+  },
+  {
+    "name": "ehlers-warped.mp3",
+    "bytes": 4567166,
+    "sha256": "fb639fc9dd334b387815c3e310cdd51b40d1d1243f59e1629ff562125ff35e78",
+    "license": "CC0-1.0",
+    "verifiedOn": "2026-11-14",
+    "author": "Alexander Ehlers",
+    "source": "https://opengameart.org/content/free-music-pack"
+  }
+]

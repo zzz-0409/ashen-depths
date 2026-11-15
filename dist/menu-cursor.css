@@ -1,0 +1,35 @@
+/* A single unambiguous cursor follows DOM focus, not inspected/equipped state. */
+#menuInputCursor{position:fixed;z-index:10000;pointer-events:none;box-sizing:border-box;border-radius:5px}
+#menuInputCursor[hidden]{display:none!important}
+#menuInputBadge{position:fixed;z-index:10002;pointer-events:none;padding:3px 9px;border:2px solid #fff;border-radius:4px;background:#08758d;color:#fff;font:800 13px/18px sans-serif;box-shadow:0 2px 8px #000;white-space:nowrap}
+#menuInputBadge[hidden]{display:none!important}
+#menuInputCursor.target-visible{border:4px solid #e9ffff;box-shadow:0 0 0 2px #08151c,0 0 0 5px #25dfff,0 0 20px #00caffaa;background:#29dfff12}
+#menuInputCursor.target-visible:before{content:'';position:absolute;left:2px;top:calc(50% - 7px);width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:10px solid #fff;filter:drop-shadow(0 1px 2px #001b26)}
+#menuInputCursor.target-outside{border:2px solid #ffe49a;background:#171a20;color:#fff3c0;text-align:center;font:700 12px/22px sans-serif;box-shadow:0 2px 8px #000}
+/* Do not make a remembered inspection look like a second live cursor. */
+#card :is(.inventory-selected,.icon-entry.selected,.guild-quest-card.selected):not(:focus){outline:none}
+/* Inspection persists when focus moves into actions. Only live focus gets a bright ring. */
+#card :is(.icon-entry.icon-selected,.inventory-selected,.guild-quest-card.selected):not(:focus){outline:none!important;box-shadow:none!important;border-color:#665d49!important;background-color:#242722!important}
+body:has(#menuInputCursor:not([hidden])) #card :is(.icon-detail,.inventory-detail,.guild-quest-detail,#foundryDetail,#nodeDetail):focus-within{box-shadow:none;border-color:#59606a}
+#card label:has(input:focus){color:#fff3bc;background:#294453;border-radius:4px}
+#menuInputCaption{position:fixed;z-index:10001;bottom:8px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);box-sizing:border-box;padding:9px 18px;border:2px solid #55eaff;border-radius:6px;background:#061923f5;color:#eaffff;font:700 15px/1.4 sans-serif;box-shadow:0 3px 12px #000;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#menuInputCaption[hidden]{display:none!important}
+#menuInputCursor.reading-detail:before{display:none}
+#menuInputCursor.reading-detail.target-visible{border-width:2px;background:transparent;box-shadow:0 0 0 2px #08151c,0 0 0 4px #25dfff}
+/* The overlay owns the focus ring; avoid a second ring across detail text. */
+body:has(#menuInputCursor:not([hidden])) #card .icon-pane:focus{outline:none!important;box-shadow:none!important}
+/* Programmatic gamepad focus must not depend on :focus-visible heuristics. */
+#card :is(button,select,input,summary,[role="button"]):focus{opacity:1!important;outline:3px solid #edffff!important;outline-offset:-3px;border-color:#57edff!important;box-shadow:inset 0 0 0 3px #08778b!important}
+#card :is(button,select,summary):focus{background:linear-gradient(120deg,#13677c,#163242)!important;color:#fff!important}
+#card :is(.icon-entry.icon-selected,.inventory-selected,.guild-selected,.guild-quest-card.selected):not(:focus){outline:none!important;box-shadow:none!important;border-color:#665d49!important;background:#20272a!important}
+#menuInputCursor.target-visible:before{left:-5px;top:-5px;width:12px;height:12px;border:0;border-left:5px solid #fff;border-top:5px solid #fff;filter:drop-shadow(0 0 2px #001b26)}
+#menuInputCursor.target-visible:after{content:'';position:absolute;right:-5px;bottom:-5px;width:12px;height:12px;border-right:5px solid #fff;border-bottom:5px solid #fff;filter:drop-shadow(0 0 2px #001b26)}
+#menuInputCursor.reading-detail:after{display:none}
+/* Reserve physical space above every menu for the single current-target label. */
+#modal{box-sizing:border-box;padding-top:48px;padding-bottom:12px}
+#modal #card{max-height:calc(100dvh - 72px)}
+#menuInputCaption{font-size:13px;line-height:20px;padding:5px 12px;max-width:calc(100vw - 16px)}
+
+/* Passive stars need a compact ring: square corners conceal neighbouring nodes. */
+#menuInputCursor.tree-node-target{border-radius:50%;border:2px solid #efffff;box-shadow:inset 0 0 0 1px #08778b;background:transparent}
+#menuInputCursor.tree-node-target:before,#menuInputCursor.tree-node-target:after{display:none}

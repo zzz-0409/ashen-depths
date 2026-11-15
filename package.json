@@ -1,0 +1,12 @@
+{
+  "name": "ashen-depths",
+  "private": true,
+  "version": "0.8.0",
+  "scripts": {
+    "verify:bundle": "node scripts/verify-bundle.cjs",
+    "verify:server-release": "node scripts/verify-server-release.cjs",
+    "verify:party-source": "node scripts/build-village-party.cjs --check",
+    "build:party": "node scripts/build-village-party.cjs",
+    "release:stamp": "node scripts/stamp-release.cjs"
+  }
+}

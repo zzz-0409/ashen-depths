@@ -1,0 +1,23 @@
+// Fixed, collision-clipped burrow route. The low back stays visible and damageable.
+function moleBurrowDestination(e){let angle=Math.atan2(p.y-e.y,p.x-e.x),length=Math.min(360,dist(e,p)),target={x:e.x,y:e.y},steps=Math.max(1,Math.ceil(length/5));for(let i=1;i<=steps;i++){let point={x:e.x+Math.cos(angle)*length*i/steps,y:e.y+Math.sin(angle)*length*i/steps};if(!passable(point.x,point.y,16)||!lineClear(target,point))break;target=point;}return target;}
+function beginMoleBurrow(e){let target=moleBurrowDestination(e),angle=Math.atan2(target.y-e.y,target.x-e.x);e.state='attack';e.elapsed=0;e.struck=false;e.facing=Math.cos(angle)-Math.sin(angle)<0?-1:1;e.attack={pattern:'moleBurrow',bespoke:true,center:{x:e.x,y:e.y},target,angle,windup:.8,travel:.9,impact:2.05,radius:85};}
+function moleTravelling(e){let a=e.attack;return e.hp>0&&a?.pattern==='moleBurrow'&&!a.blocked&&e.elapsed>=a.windup&&e.elapsed<a.impact;}
+const moleAnimateBase=animateEnemy;animateEnemy=(e,dt)=>{
+ if(e.species!=='r1e5')return moleAnimateBase(e,dt);if(e.hp<=0||e.reactionStun>0)return;
+ if(e.state!=='attack'&&e.t<=dt&&dist(e,p)<=350&&lineClear(e,p))beginMoleBurrow(e);
+ let a=e.attack;if(a?.pattern!=='moleBurrow')return moleAnimateBase(e,dt);
+ let previous=e.elapsed;e.elapsed+=dt;e.anim+=dt;e.flash=Math.max(0,(e.flash||0)-dt);e.slow=Math.max(0,(e.slow||0)-dt);
+ let delta=clamp((e.elapsed-a.windup)/a.travel,0,1)-clamp((previous-a.windup)/a.travel,0,1);
+ if(delta>0&&!a.blocked){let dx=(a.target.x-a.center.x)*delta,dy=(a.target.y-a.center.y)*delta,steps=Math.max(1,Math.ceil(Math.hypot(dx,dy)/5));for(let i=0;i<steps;i++){let before={x:e.x,y:e.y};moveActor(e,dx/steps,dy/steps,16);if(Math.hypot(e.x-before.x-dx/steps,e.y-before.y-dy/steps)>.1||!lineClear(before,e)){e.x=before.x;e.y=before.y;a.blocked=true;e.struck=true;break;}}}
+ if(e.elapsed>=a.impact&&!e.struck){e.struck=true;if(!a.blocked&&dist(e,a.target)<1&&dist(a.target,p)<=a.radius&&lineClear(a.target,p))hurt(48);if(typeof playSound==='function')playSound('impact',e.x,e.y);}
+ if(e.elapsed>=a.impact+1.35){e.state='idle';e.attack=null;e.t=1.1;}
+};
+const moleSheet=new Image();moleSheet.assetSrc='assets/cave-mole-anim.png';
+const moleDrawBase=drawRegionEnemy;drawRegionEnemy=(e,size)=>{
+ if(e.species!=='r1e5')return moleDrawBase(e,size);let s=project(e.x,e.y),a=e.attack,frame=spriteFrame(e.state,e.anim);
+ if(a?.pattern==='moleBurrow')frame={row:2,col:a.blocked?3:e.elapsed<a.windup?0:e.elapsed<(a.impact||2.05)?1:e.elapsed<(a.impact||2.05)+.25?2:3};
+ ctx.save();ctx.translate(s.x,s.y);ctx.scale(e.facing||1,1);ctx.fillStyle='#0006';ctx.beginPath();ctx.ellipse(0,0,35,12,0,0,Math.PI*2);ctx.fill();
+ if(moleSheet.complete&&moleSheet.naturalWidth){let sw=moleSheet.naturalWidth/4,sh=moleSheet.naturalHeight/3,w=170,h=w*sh/sw;ctx.filter=e.flash>0?'brightness(1.8)':'none';if(typeof drawPreparedEnemySprite==='function')drawPreparedEnemySprite(ctx,moleSheet,frame.col*sw,frame.row*sh,sw,sh,-w/2,-h*.77,w,h);else ctx.drawImage(moleSheet,frame.col*sw,frame.row*sh,sw,sh,-w/2,-h*.77,w,h);}ctx.restore();return true;
+};
+const moleGroundBase=drawGroundEffects;drawGroundEffects=()=>{moleGroundBase();for(let e of (typeof enemyRenderList==='function'?enemyRenderList('r1e5'):enemies)){let a=e.attack;if(e.species!=='r1e5'||e.hp<=0||a?.pattern!=='moleBurrow'||a.blocked||!visibleAt(e.x,e.y))continue;let remaining=a.impact-e.elapsed;if(remaining<-.3)continue;ctx.save();let s=project(a.target.x,a.target.y);ctx.fillStyle=remaining<=0?'#f2d49a66':'#ddb06020';ctx.beginPath();ctx.ellipse(s.x,s.y,a.radius*ISOX*Math.SQRT2,a.radius*ISOY*Math.SQRT2,0,0,Math.PI*2);ctx.fill();groundRing(a.target.x,a.target.y,a.radius,'#edc585',2);groundRing(a.target.x,a.target.y,a.radius*clamp(e.elapsed/a.impact,0,1),'#ffe8b4',1);ctx.restore();}};
+const moleEffectsBase=drawEffects;drawEffects=()=>{moleEffectsBase();for(let e of (typeof enemyRenderList==='function'?enemyRenderList('r1e5'):enemies)){let a=e.attack;if(e.species!=='r1e5'||e.hp<=0||a?.pattern!=='moleBurrow'||!visibleAt(e.x,e.y))continue;let travelling=moleTravelling(e),age=e.elapsed-a.impact;if(!travelling&&(age<0||age>.5))continue;ctx.save();let s=project(e.x,e.y);ctx.globalAlpha=travelling?.85:1-age/.5;ctx.fillStyle='#6b5b43';ctx.beginPath();ctx.ellipse(s.x,s.y+1,travelling?34:45,10,0,0,Math.PI*2);ctx.fill();for(let j=0;j<8;j++){let t=j*Math.PI/4+(travelling?e.anim*2:0),r=travelling?35:35+age*90,pos=project(e.x+Math.cos(t)*r,e.y+Math.sin(t)*r),h=travelling?7+Math.sin(e.anim*15+j)*5:Math.sin(age/.5*Math.PI)*28;ctx.fillStyle=j%2?'#9e8862':'#594b39';ctx.beginPath();ctx.moveTo(pos.x-4,pos.y);ctx.lineTo(pos.x-3,pos.y-h-4);ctx.lineTo(pos.x+5,pos.y-h);ctx.lineTo(pos.x+4,pos.y+2);ctx.closePath();ctx.fill();}ctx.restore();}};

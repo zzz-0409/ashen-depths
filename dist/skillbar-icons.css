@@ -1,0 +1,7 @@
+.actions .bar-icon.ability-bar-icon{display:grid;place-items:center;background-image:radial-gradient(ellipse at 50% 45%,#344656,#101821 62%,#070b10);background-size:100% 100%;background-position:center!important;overflow:hidden}
+.actions .ability-bar-icon .skill-ability-icon{width:70%;height:70%;margin-bottom:8px;color:var(--skill-ink)!important;filter:drop-shadow(0 0 4px var(--skill-ink));opacity:1}
+.actions button.skill-empty .ability-bar-icon{opacity:.25}
+
+/* Temporary skill lock keeps controls focusable while communicating the restriction. */
+.actions button.skill-sealed .bar-icon{filter:grayscale(.8) brightness(.45)}
+.actions button.skill-sealed .skill-state{border-color:#c39bdf;color:#efd8ff;background:#241c32}

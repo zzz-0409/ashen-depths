@@ -1,0 +1,31 @@
+const STONE_WALL_SIGNATURE=['隔ての石垣',28,8,'探索地で、照準地点に長さ180・厚さ20の石垣を4秒間作る。自分・敵の移動と、壁に遮られる弾や攻撃の射線を防ぐ。攻撃力は持たない。自分や敵に重なる場所、地形に埋まる場所には設置できず、その場合も発動コストは消費する。再設置が成功すると前の壁は消える。属性と範囲補正で壁の形・持続時間は変わらない。地域移動・死亡・訓練リセットで解除。','M7 44V22L18 15L29 22L40 15L49 22V44ZM7 32H49M18 15V32M29 22V44M40 15V32'];
+SIGNATURE_SKILLS.push(STONE_WALL_SIGNATURE);Object.assign(GEM.crafted_5_0,{name:STONE_WALL_SIGNATURE[0],cost:28,cool:8,desc:STONE_WALL_SIGNATURE[3],ability:null,signature:96,tags:['spell']});
+SIGNATURE_AUDIO.push(['stonewall',125,.45]);SKILL_AUDIO_FAMILIES.heavy.add('stonewall');
+let stoneWall=null;
+function stoneWallDistance(q,a,b){let dx=b.x-a.x,dy=b.y-a.y,len=dx*dx+dy*dy,t=len?Math.max(0,Math.min(1,((q.x-a.x)*dx+(q.y-a.y)*dy)/len)):0;return Math.hypot(q.x-a.x-dx*t,q.y-a.y-dy*t);}
+function stoneWallCross(a,b,c){return(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);}
+function stoneWallSegmentDistance(a,b,c,d){let x=stoneWallCross(a,b,c),y=stoneWallCross(a,b,d),u=stoneWallCross(c,d,a),v=stoneWallCross(c,d,b);if(x*y<0&&u*v<0)return 0;return Math.min(stoneWallDistance(a,c,d),stoneWallDistance(b,c,d),stoneWallDistance(c,a,b),stoneWallDistance(d,a,b));}
+function stoneWallActive(){return !!(stoneWall&&stoneWall.owner===p&&stoneWall.world===dungeon&&!dead&&p?.hp>0&&stoneWall.time<4&&signatureSpells.includes(stoneWall));}
+const stoneWallPassBase=passable;const stoneWallPassable=(x,y,r=13)=>stoneWallPassBase(x,y,r)&&(!stoneWallActive()||stoneWallDistance({x,y},stoneWall.ends[0],stoneWall.ends[1])>10+r*Math.SQRT2);
+const stoneWallLOSBase=lineClear;const stoneWallLOS=(a,b,r=0)=>stoneWallLOSBase(a,b,r)&&(!stoneWallActive()||stoneWallSegmentDistance(a,b,stoneWall.ends[0],stoneWall.ends[1])>10+r*Math.SQRT2);
+const stoneWallPathBase=findPath;
+function stoneWallPath(start,end){if(!stoneWallActive())return stoneWallPathBase(start,end);if(!end)return[];const valid=path=>{let from=start;for(let q of path){if(!lineClear(from,q,15))return false;from=q;}return path.length>0;};let direct=stoneWallPathBase(start,end);if(valid(direct))return direct;let [a,b]=stoneWall.ends,ux=(b.x-a.x)/180,uy=(b.y-a.y)/180,nx=-uy,ny=ux,side=((start.x-stoneWall.x)*nx+(start.y-stoneWall.y)*ny)>=0?1:-1,candidates=[];
+ for(let [point,sign]of [[a,-1],[b,1]]){let middle={x:point.x+ux*sign*45,y:point.y+uy*sign*45},near={x:middle.x+nx*45*side,y:middle.y+ny*45*side},far={x:middle.x-nx*45*side,y:middle.y-ny*45*side},route=[],from=start,okay=true;
+  for(let target of [near,far,end]){if(!passable(target.x,target.y,15)){okay=false;break;}let leg=lineClear(from,target,15)?[target]:stoneWallPathBase(from,target);if(!leg.length){okay=false;break;}route.push(...leg);from=target;}if(okay&&valid(route)){let length=0,from=start;for(let q of route){length+=dist(from,q);from=q;}candidates.push({route,length});}
+ }return candidates.sort((a,b)=>a.length-b.length)[0]?.route||[];
+}
+function stoneWallEnable(){passable=stoneWallPassable;lineClear=stoneWallLOS;findPath=stoneWallPath;}
+function stoneWallClear(){stoneWall=null;if(passable===stoneWallPassable)passable=stoneWallPassBase;if(lineClear===stoneWallLOS)lineClear=stoneWallLOSBase;if(findPath===stoneWallPath)findPath=stoneWallPathBase;}
+function stoneWallPlacement(s){let [a,b]=s.ends;for(let i=0;i<=18;i++)if(!stoneWallPassBase(a.x+(b.x-a.x)*i/18,a.y+(b.y-a.y)*i/18,10))return false;return[p,...enemies.filter(e=>e.hp>0)].every(e=>stoneWallDistance(e,a,b)>10+(e===p?24:Math.max(32,enemyHitRadius(e))));}
+const stoneWallCastBase=castCraftedSkill;castCraftedSkill=(build,...args)=>{let result=stoneWallCastBase(build,...args);if(GEM[build.type]?.signature!==96)return result;let s=signatureSpells.at(-1);if(s?.mode!==96)return result;s.owner=p;s.world=dungeon;s.target=null;let dx=-Math.sin(s.angle)*90,dy=Math.cos(s.angle)*90;s.ends=[{x:s.x-dx,y:s.y-dy},{x:s.x+dx,y:s.y+dy}];if(!stoneWallPlacement(s)){signatureSpells=signatureSpells.filter(v=>v!==s);say('石垣を置くための空間が足りません');return result;}signatureSpells=signatureSpells.filter(v=>v.mode!==96||v===s);stoneWall=s;stoneWallEnable();return result;};
+const stoneWallStepBase=stepSignature;stepSignature=(s,dt)=>{if(s.mode!==96)return stoneWallStepBase(s,dt);if(s!==stoneWall||!stoneWallActive()){if(s===stoneWall)stoneWallClear();return false;}if(paused||!Number.isFinite(dt)||dt<=0)return true;s.time+=dt;if(s.time+1e-8>=4){stoneWallClear();return false;}return true;};
+const stoneWallResetBase=resetWorld;resetWorld=()=>{stoneWallClear();return stoneWallResetBase();};
+const stoneWallLoadBase=loadWorld;loadWorld=(...args)=>{stoneWallClear();return stoneWallLoadBase(...args);};
+const stoneWallDummyBase=clearDummy;clearDummy=(...args)=>{stoneWallClear();return stoneWallDummyBase(...args);};
+function stoneWallFace(points,fill){ctx.beginPath();points.forEach((q,i)=>i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y));ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.stroke();}
+const stoneWallGroundBase=drawGroundEffects;drawGroundEffects=()=>{stoneWallGroundBase();if(!started||!stoneWallActive())return;let s=stoneWall;if(!visibleAt(s.x,s.y))return;if(typeof paintStoneWallAtlas==='function'&&paintStoneWallAtlas(s))return;let [a,b]=s.ends,ux=(b.x-a.x)/180,uy=(b.y-a.y)/180;ctx.save();ctx.strokeStyle='#a3c2c6';ctx.lineWidth=1.5;ctx.globalAlpha=Math.min(1,(4-s.time)*2);for(let i=0;i<4;i++){let from={x:a.x+ux*(i*45+1),y:a.y+uy*(i*45+1)},to={x:a.x+ux*((i+1)*45-1),y:a.y+uy*((i+1)*45-1)},corners=[{x:from.x-uy*10,y:from.y+ux*10},{x:to.x-uy*10,y:to.y+ux*10},{x:to.x+uy*10,y:to.y-ux*10},{x:from.x+uy*10,y:from.y-ux*10}].map(q=>project(q.x,q.y)),height=42+(i%2)*6,top=corners.map(q=>({x:q.x,y:q.y-height}));stoneWallFace([corners[0],corners[1],top[1],top[0]],'#3c505b');stoneWallFace([corners[1],corners[2],top[2],top[1]],'#273840');stoneWallFace(top,'#6b858d');}ctx.restore();};
+const stoneWallStatusBase=controlSkillStatus;controlSkillStatus=s=>s.mode===96?{label:'石垣',value:Math.max(0,1-s.time/4),waiting:true}:stoneWallStatusBase(s);
+
+const stoneWallUpdateBase=update;update=dt=>{if(stoneWall&&!stoneWallActive())stoneWallClear();return stoneWallUpdateBase(dt);};
+
+let stoneWallVillageNotice=0;const stoneWallActionBase=cast;cast=n=>{if(n!==0&&n!==3&&villageOpen&&p?.bindings?.[skillBindingIndex(n)]==='crafted_5_0'){let now=performance.now();if(now>=stoneWallVillageNotice){stoneWallVillageNotice=now+1200;say('石垣は探索地で使用できます');}return false;}return stoneWallActionBase(n);};

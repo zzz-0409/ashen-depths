@@ -1,0 +1,17 @@
+// Two actual normal hits from opposing sides; identity remains independent of forged elements.
+const FLANK_SIGNATURE=['双面の烙印',23,7,'照準付近の敵1体へ8秒の刻印。通常攻撃の最初の直撃で攻撃した側を記録。敵を中心に120度以上回り込み、次の通常攻撃を直接当てると360%の追撃を一度だけ与える。同じ側の連打・スキル・継続ダメージでは完成しない。敵と10以上離れ、射線が通る必要がある。再発動でやり直す。','M26 8L34 16L26 24L18 16ZM8 32Q8 17 16 13M6 24L8 32L16 30M44 26Q44 41 36 45M36 28L44 26L46 34M20 38H32'];
+SIGNATURE_SKILLS.push(FLANK_SIGNATURE);
+Object.assign(GEM.crafted_1_7,{name:FLANK_SIGNATURE[0],cost:23,cool:7,desc:FLANK_SIGNATURE[3],ability:null,signature:79,tags:['spell','area']});
+SIGNATURE_AUDIO.push(['flank',1050,.28]);SKILL_AUDIO_FAMILIES.metal.add('flank');
+const flankCastBase=castCraftedSkill;castCraftedSkill=(build,...args)=>{let result=flankCastBase(build,...args);if(GEM[build.type]?.signature!==79)return result;let s=signatureSpells.at(-1);if(!s||s.mode!==79)return result;signatureSpells=signatureSpells.filter(v=>v.mode!==79||v===s);s.owner=p;s.axis=null;s.finished=false;if(!s.target){signatureSpells=signatureSpells.filter(v=>v!==s);say('照準の近くに敵がいません');}return result;};
+function flankValid(s){return s.owner===p&&!s.finished&&s.time<8&&s.target?.hp>0&&enemies.includes(s.target);}
+let flankResolving=false;
+const flankHitBase=hit;hit=(e,d)=>{
+ let distance=e?dist(p,e):0,watch=started&&p.hp>0&&!flankResolving&&cadenceNormalAction&&classHitKind==='normal'&&!e?.dotTick&&!treeExplosion&&!paused&&!dead&&distance>=10&&lineClear(p,e)?signatureSpells.filter(s=>s.mode===79&&flankValid(s)&&s.target===e):[];
+ let axis=watch.length?{x:(p.x-e.x)/distance,y:(p.y-e.y)/distance}:null,hp=e?.hp,training=e?.trainingHits||0,result=flankHitBase(e,d);
+ if(axis&&e&&(e.hp<hp||(e.trainingHits||0)>training)&&!dead&&p.hp>0)for(let s of watch){if(!signatureSpells.includes(s)||s.finished||s.owner!==p)continue;if(!s.axis){s.axis=axis;playSignatureAudio(79,false,e.x,e.y);}else if(s.axis.x*axis.x+s.axis.y*axis.y<=-.5+1e-9){s.finished=true;flankResolving=true;try{if(e.hp>0)spellHit(e,s.damage*3.6,s.build);playSignatureAudio(79,true,e.x,e.y);burst(e.x,e.y,100,ELEMENTS[s.build.elements[0]].color);}finally{flankResolving=false;}}}
+ return result;
+};
+const flankStepBase=stepSignature;stepSignature=(s,dt)=>{if(s.mode!==79)return flankStepBase(s,dt);if(dead||p.hp<=0||!flankValid(s))return false;if(paused)return true;s.time=Math.round((s.time+dt)*1e6)/1e6;s.x=s.target.x;s.y=s.target.y;return s.time<8;};
+const flankPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{flankPaintBase();ctx.save();for(let s of signatureSpells){if(s.mode!==79||!flankValid(s)||!visibleAt(s.target.x,s.target.y))continue;let e=s.target,q=project(e.x,e.y),col=ELEMENTS[s.build.elements[0]].color;ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(q.x,q.y-110);ctx.lineTo(q.x+10,q.y-98);ctx.lineTo(q.x,q.y-86);ctx.lineTo(q.x-10,q.y-98);ctx.closePath();ctx.stroke();if(s.axis){let center=Math.atan2(s.axis.y,s.axis.x)+Math.PI;ctx.strokeStyle='#91f2f4';ctx.lineWidth=4;ctx.beginPath();for(let i=0;i<=20;i++){let a=center-Math.PI/3+i*Math.PI/30,pos=project(e.x+Math.cos(a)*85,e.y+Math.sin(a)*85);if(i===0)ctx.moveTo(pos.x,pos.y);else ctx.lineTo(pos.x,pos.y);}ctx.stroke();let to=project(e.x-s.axis.x*85,e.y-s.axis.y*85);glowAt(to,10,'#91f2f4',.7);}else groundRing(e.x,e.y,45,col,2);}ctx.restore();};
+const flankStatusBase=controlSkillStatus;controlSkillStatus=s=>s.mode===79?{label:s.finished?'挟撃成功':s.axis?'回り込んで攻撃':'通常攻撃で印',value:s.axis?.5:0,waiting:!s.finished}:flankStatusBase(s);

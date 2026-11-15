@@ -1,0 +1,93 @@
+/* Distinct navigation shapes for actions, equipment, recipes and quests. */
+#card{--menu-accent:#d7b77a;--menu-edge:#4d4940;background:linear-gradient(120deg,#192126f5,#0d131afc 65%);box-shadow:0 24px 90px #000b,inset 0 0 0 4px #a2895220}
+#card .panel-heading{border-bottom:1px solid var(--menu-edge);padding-bottom:12px}
+#card .panel-heading h2{letter-spacing:2px;color:#ead5aa}
+#card .panel-controls{font:12px/1.7 sans-serif;color:#b9b5a9}
+#card button:focus-visible,#card select:focus-visible,#card input:focus-visible,#card summary:focus-visible{outline:2px solid #ffe3a0;outline-offset:-3px;box-shadow:inset 4px 0 #ffe3a0;background-color:#433b2c}
+#card select{min-height:36px;padding:6px 28px 6px 10px;border:1px solid #75664b;background:#172128;color:#eee0c5;font:13px sans-serif;color-scheme:dark}
+#card button:disabled{opacity:.45}
+#card[data-surface="village"]{--menu-accent:#bcc5a0}
+.icon-quest-board{grid-template-columns:minmax(180px,.85fr) minmax(0,1.35fr);gap:20px}
+.icon-quest-board .guild-quest-list{display:flex;flex-direction:column;gap:5px;padding:6px}
+.icon-quest-board .guild-quest-list button{display:grid;grid-template-columns:34px minmax(0,1fr);min-height:56px;flex:none;padding:10px 12px;text-align:left;justify-content:start;background:linear-gradient(100deg,#29312e,#151e22);border-color:#4e584c}
+.icon-quest-board .menu-symbol{font-size:26px;text-align:center}
+.icon-quest-board .icon-caption{font-size:13px;white-space:normal;line-height:1.5;color:#e3decb}
+.guild-quest-detail{background:#101920;border:1px solid #444b43;padding:16px 20px}
+.guild-quest-detail>h3{top:-16px;padding:16px 0 12px;background:#101920;border-bottom:1px solid #625a43}
+#card[data-surface="forge"] .icon-browser{grid-template-columns:minmax(125px,.35fr) minmax(0,1.65fr)}
+#card[data-surface="forge"] .icon-list{display:flex;flex-direction:column;gap:5px}
+#card[data-surface="forge"] .icon-entry{flex:none;min-height:52px;flex-direction:row;justify-content:flex-start;padding:8px 12px;gap:12px}
+#card[data-surface="forge"] .menu-slot-icon{width:30px;height:30px;margin:0;flex:none}
+#card[data-surface="forge"] .icon-caption{font-size:13px;text-align:left}
+.inventory-list .gear-equipment{padding-bottom:12px;border-bottom:1px solid #5a513d}
+.inventory-detail,.icon-detail{background:#101820;border:1px solid #47473c}
+.inventory-list [data-rarity="rare"]{border-top:3px double #d6b66a}
+.inventory-list [data-rarity="magic"]{border-top:3px solid #79b5d2}
+.classic-action-menu>button{border:0;border-bottom:1px solid #5c543e;background:linear-gradient(90deg,#30342c99,transparent);padding:16px 22px}
+.classic-action-menu>button:focus-visible{background:linear-gradient(90deg,#69573599,#252b2780)}
+.classic-menu-body[data-menu-kind="settings"] .settings-grid{grid-template-columns:1fr;max-width:760px;margin:auto}
+.classic-menu-body[data-menu-kind="settings"] section{background:#152028;border:0;border-top:1px solid #736345;padding:16px 20px}
+.classic-menu-body[data-menu-kind="settings"] label{line-height:2}
+.material-tile{background:linear-gradient(100deg,#1f2b2d,#152024);border-color:#48544e;border-radius:3px}
+.material-tile span{font-variant-numeric:tabular-nums}.material-short{border-color:#b7735e}
+#foundryDetail{background:#101820;border:1px solid #47473c}
+#foundryGrid button{background:linear-gradient(145deg,#283537,#131d25);border-color:#596054;min-height:78px}
+#foundryGrid button:focus{border-color:#ffe3a0;box-shadow:inset 0 0 0 2px #d6b779}
+.foundry-pages{padding:8px 0}
+@media(max-width:700px){.icon-quest-board{grid-template-columns:minmax(130px,.85fr) minmax(0,1.15fr);gap:7px}.icon-quest-board .guild-quest-list button{padding:8px 5px;grid-template-columns:24px minmax(0,1fr)}.icon-quest-board .icon-caption{font-size:11px}.guild-quest-detail{padding:10px}.guild-quest-detail>h3{top:-10px;padding-top:10px}#card[data-surface="forge"] .icon-browser{grid-template-columns:100px minmax(0,1fr)}#card[data-surface="forge"] .icon-entry{padding:7px;gap:5px}#card .panel-controls{font-size:10px}}
+/* Keep the decision and its cost in the first view at normal desktop height. */
+#card[data-surface="forge"] .icon-pane h3{font-size:18px;margin:0 0 10px}
+#card[data-surface="forge"] .icon-pane p{margin:6px 0;line-height:1.5}
+#card[data-surface="forge"] .icon-pane .forge-controls{gap:8px;margin:8px 0}
+#card[data-surface="forge"] .icon-pane label{font-size:11px}
+#card[data-surface="forge"] .icon-pane button{padding:9px 14px}
+.guild-quest-detail dl{display:grid;grid-template-columns:54px 1fr;align-items:baseline;gap:8px;margin:12px 0}
+.guild-quest-detail dt,.guild-quest-detail dd{margin:0}.guild-quest-detail p{margin:8px 0;line-height:1.6}
+.guild-quest-detail dl{grid-template-columns:1fr 1fr}.guild-quest-detail dl>div{min-width:0}.guild-quest-detail dd{white-space:normal}
+.guild-quest-detail>h3{font-size:19px;margin:0 0 10px;padding-bottom:10px}
+.guild-quest-detail details{margin:8px 0}.guild-quest-detail .guild-quest-action{margin-top:8px}
+
+.gem-description>small{display:block;font:13px/1.8 sans-serif;margin:8px 0;color:#c9c7bb}.gem-description>b,.gem-description>i{display:none}.icon-pane>span{display:inline-block;margin:0 0 12px}.gem-description{margin:12px 0 18px}
+.recipe-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;font:12px sans-serif}.recipe-toolbar label{display:flex;align-items:center;gap:6px}.recipe-toolbar button{padding:8px 12px}.recipe-toolbar>span{color:#b7baa9}.recipe-meta{color:#cfb77e;font-size:12px;margin-bottom:10px}.recipe-stats{padding:10px 12px;background:#1d292b;border-left:3px solid #baa369}.recipe-stats>strong{display:none}.recipe-stats>small{display:block;margin:4px 0}.recipe-status{font-size:12px!important}.recipe-tile-status{font:10px sans-serif;color:#b3b1a6}.icon-entry[data-ready="true"] .recipe-tile-status{color:#a6d6a6}#card[data-surface="forgeRecipes"] .icon-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#card[data-surface="forgeRecipes"] .icon-entry{min-height:110px}#card[data-surface="forgeRecipes"] .icon-caption{white-space:normal;font-size:12px}#card[data-surface="forgeRecipes"] .menu-slot-icon{width:48px;height:48px}#card[data-surface="forgeRecipes"] .icon-browser{height:48vh}#card[data-surface="forgeRecipes"] h4{margin:14px 0 6px}#card[data-surface="forgeRecipes"] .icon-pane details{margin-top:12px}@media(max-width:700px){#card[data-surface="forgeRecipes"] .icon-list{grid-template-columns:repeat(2,minmax(0,1fr))}.recipe-toolbar{gap:6px}.recipe-toolbar>span{display:none}#card[data-surface="forgeRecipes"] .icon-browser{height:44vh}}@media(max-height:600px){#card[data-surface="forgeRecipes"] .icon-browser{height:38vh}.recipe-toolbar{margin-top:4px}}
+#card[data-surface="forgeRecipes"] .icon-pane h3{margin:0 0 10px;font-size:21px}.recipe-stats>strong{display:block;font:18px sans-serif;color:#edd7a7}.recipe-mods{display:flex;flex-wrap:wrap;gap:4px 18px;font:12px/1.7 sans-serif;margin:7px 0}.recipe-sockets{font:12px/1.6 sans-serif;margin-top:5px}.recipe-stats{padding:10px}.recipe-meta{margin-bottom:7px}#card[data-surface="forgeRecipes"] .material-tile{padding:7px;margin:4px 0}#card[data-surface="forgeRecipes"] .material-icon{width:38px;height:38px}#card[data-surface="forgeRecipes"] .recipe-status{margin:6px 0}#card[data-surface="forgeRecipes"] [data-recipe-craft]{margin-top:3px;padding:10px 16px}
+
+.equipment-art{width:64px;height:68px;display:block;flex:none;filter:drop-shadow(0 3px 3px #0008)}#card[data-surface="forgeRecipes"] .equipment-art{width:70px;height:74px}#card[data-surface="forgeRecipes"] .icon-entry{min-height:132px}.inventory-list .equipment-art{margin:auto;width:58px;height:62px}@media(max-width:700px){.equipment-art,#card[data-surface="forgeRecipes"] .equipment-art{width:48px;height:52px}}
+#card[data-surface="forgeRecipes"] .icon-entry{min-height:148px;height:auto}#card[data-surface="forgeRecipes"] .icon-caption,#card[data-surface="forgeRecipes"] .recipe-tile-status{flex:none;line-height:1.4}
+
+.skill-ability-icon{width:48px;height:48px;display:inline-block;vertical-align:middle;flex:none}#foundryGrid button{min-height:100px}#foundryGrid small{line-height:1.4}
+
+/* Current controller target stays visible, even after a mouse click. Gold means inspected;
+   bright cyan/white means the one control that A will activate. */
+#card :is(button,select,input,textarea,summary,[role="button"],[tabindex]):focus{
+ outline:3px solid #e9ffff!important;outline-offset:-3px!important;
+ box-shadow:inset 0 0 0 6px #19a9cc,inset 0 0 22px #21c7eb55,0 0 9px #2cd4ff88!important;
+ border-color:#a9f3ff!important;
+}
+#card :is(button,select,summary,[role="button"]):focus{
+ background:linear-gradient(120deg,#205467,#132f40)!important;color:#fff!important;
+}
+#card :is(button,select,summary,[role="button"]):focus .icon-caption{color:#fff}
+#card input[type="range"]:focus{outline-offset:5px!important;background:#205467!important}
+#card :is(.icon-detail,.inventory-detail,.guild-quest-detail,#foundryDetail,#nodeDetail):focus-within{border-color:#52d5f4;box-shadow:inset 3px 0 #52d5f4}
+#card :is(.icon-list,.inventory-list,.guild-quest-list,#foundryGrid):focus-within{scrollbar-color:#65dfff #101820}
+
+/* Small socket circles and SVG passive nodes need their own focus geometry. */
+#card .socket:focus{outline:3px solid #fff!important;outline-offset:4px!important;box-shadow:0 0 0 7px #14b6dd,0 0 18px #37d8ff!important;position:relative;z-index:2}
+#card .node:focus{opacity:1!important;outline:none!important;filter:drop-shadow(0 0 5px #35ddff)}
+#card .node:focus>circle:first-child{fill:#174f64!important;stroke:#21bfe5!important;stroke-width:7px!important;vector-effect:non-scaling-stroke}
+#card .node:focus .rim{stroke:#fff!important;stroke-width:3px!important;opacity:1!important;vector-effect:non-scaling-stroke}
+
+/* Keep layout stable while clearing secondary battle text. */
+body.combat-hud-compact .hint,body.combat-hud-compact #feed{visibility:hidden;pointer-events:none}
+
+/* Active skills only: compact badge above each slot, preserving key/cooldown labels. */
+.actions button{position:relative}
+.actions .skill-state{position:absolute;bottom:calc(100% + 3px);left:-2px;right:-2px;box-sizing:border-box;padding:3px 1px 5px;background:#08212ef5;border:1px solid #65dfff;border-radius:3px;color:#e7fbff;font:700 10px/12px sans-serif;white-space:nowrap;pointer-events:none;box-shadow:0 2px 5px #000}
+.actions .skill-state:after{content:'';position:absolute;left:0;bottom:0;width:calc(100% * var(--skill-progress));height:3px;background:#65dfff}
+.actions .skill-state.waiting{border-color:#e9bd70;color:#ffe5b5}
+.actions .skill-state.waiting:after{background:#e9bd70}
+.actions .skill-state[hidden]{display:none!important}
+/* The keycaps already sit above the buttons: reserve a second row for status. */
+.actions .skill-state{bottom:calc(100% + 23px)}
+.belt:has(.skill-state:not([hidden])) #stats{margin-bottom:50px}
+@media(max-width:900px){.actions:has(.skill-state:not([hidden])){row-gap:46px}}
