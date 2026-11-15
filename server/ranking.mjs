@@ -24,7 +24,7 @@ export async function verifyGoogleToken(token,clientId,nonce,{fetchKeys=()=>fetc
 }
 function setCookie(name,value,request,maxAge){let secure=new URL(request.url).protocol==='https:'?'; Secure':'';return name+'='+value+'; Path=/; HttpOnly; SameSite=Strict; Max-Age='+maxAge+secure}
 async function readBody(request){let text=await request.text();if(text.length>16000)fail('送信内容が大きすぎます',413);try{return JSON.parse(text)}catch{fail('送信内容が不正です')}}
-async function user(request,env){let token=cookie(request,'ad_session');if(!token)return null;return env.DB.prepare('SELECT account_id FROM sessions WHERE token_hash=? AND expires_at>?').bind(await hash(token),Date.now()).first()}
+export async function user(request,env){let token=cookie(request,'ad_session');if(!token)return null;return env.DB.prepare('SELECT account_id FROM sessions WHERE token_hash=? AND expires_at>?').bind(await hash(token),Date.now()).first()}
 export async function rankingApi(request,env){let url=new URL(request.url);if(!url.pathname.startsWith('/api/'))return null;
  try{
   if(request.method==='POST'&&request.headers.get('Origin')!==url.origin)fail('送信元を確認できません',403);
