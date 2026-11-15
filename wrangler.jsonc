@@ -1,5 +1,6 @@
 {
   "name": "ashen-depths",
+  "vars": {"GOOGLE_CLIENT_ID":"22571518378-kh435db2vh4o4srd76bmno4jrc783udh.apps.googleusercontent.com"},
   "main": "server/index.mjs",
   "compatibility_date": "2026-11-15",
   "assets": {
