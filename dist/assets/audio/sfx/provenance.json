@@ -1,0 +1,181 @@
+{
+  "license": "CC0-1.0",
+  "checked": "2026-11-16",
+  "changes": "Original Ogg bytes; playback gain/pan/rate only",
+  "files": [
+    {
+      "file": "rpg-knifeSlice.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "4cd96dc630bed9840c15f1dd2306da2cc56a4da26a5d3f1a03c5a7265ac5e54f"
+    },
+    {
+      "file": "rpg-knifeSlice2.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "6c2064d0ef988d1ec3d56868e823ea8823a5cac00f2742560052633529407def"
+    },
+    {
+      "file": "rpg-chop.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "d00c2b3c9fff07e376145c8c8c45c90e5084ec192f6ce0387db233f7b86f1486"
+    },
+    {
+      "file": "rpg-drawKnife1.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "276403e72c3b71c47bc24db3083970c23f8e5551ffa78f436f83483c56f3f0bb"
+    },
+    {
+      "file": "rpg-drawKnife2.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "d5df6a4130cbb016f97b4883769a418917b9629cb4c21717030b186e0c73281a"
+    },
+    {
+      "file": "rpg-footstep00.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "6fe61ef1fc3bcf0e253bf2eb64759db6cb69e2fe452f4d88cc597ecf78a3d601"
+    },
+    {
+      "file": "rpg-footstep01.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "313472dba31fd0c855376069fa368bb5a198c27251cc8398ef464578b7047a4c"
+    },
+    {
+      "file": "rpg-footstep02.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "2d9575b7dead6e1217ca113991fc5229e9b6d998ea0726ebbb277e7398ab888f"
+    },
+    {
+      "file": "rpg-footstep03.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "a86756b9af9f370455ab47844239bb07fd1bee7a113068c91f0fcd9b72703fae"
+    },
+    {
+      "file": "rpg-handleCoins.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "8a91f969e932df709df80ee124d86a51389eed9b67f22e5e716bc2bbf60d8dab"
+    },
+    {
+      "file": "rpg-handleCoins2.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "4b857968d64f9ac9336a10ffac6694d7547e1f01566ad6857b30bc8db3ee6c32"
+    },
+    {
+      "file": "rpg-cloth1.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d"
+    },
+    {
+      "file": "rpg-cloth2.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "8a7451193c38bc05483aec25dd193e163a15d44cf7fff04ac7912573231b0201"
+    },
+    {
+      "file": "rpg-metalPot1.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "159def979e8e386c2c539f5e99cc30a080eb2dcb6c911fa2e4ccc0785b2522fd"
+    },
+    {
+      "file": "rpg-metalPot2.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "8e1f820d217d380fde10e969d109db34303e3f4d11c3951926eddef813d04ae2"
+    },
+    {
+      "file": "rpg-bookOpen.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "953390534377222bee89ac8cd9e60a58fdc037c71a4d7c18c43cd647c7f34ba8"
+    },
+    {
+      "file": "rpg-bookClose.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/rpg-audio",
+      "sha256": "81e976532565f4372abd14e83d2684195fa548d0a28d345de221e56052454f32"
+    },
+    {
+      "file": "ui-click_001.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "sha256": "ccfb7fa0cccdd9faec0eb16033c732b1e308d139d80f799161495d58f7adcdb9"
+    },
+    {
+      "file": "ui-select_001.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "sha256": "aec0c31ea934a35936ae0d2ab8fac8123c93aa5647f935853a58dbaf90278b7a"
+    },
+    {
+      "file": "ui-open_001.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "sha256": "a27c6bb0df7da1e6af5dd5937593c98bc58b6e513f42fe6a3254cd6a6949c648"
+    },
+    {
+      "file": "ui-close_001.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "sha256": "44af8249b933e0fd35ec957a638bb1a0b01f85b53fbe9674bf77bd3ca3168ef4"
+    },
+    {
+      "file": "ui-confirmation_001.ogg",
+      "author": "Kenney",
+      "source": "https://kenney.nl/assets/interface-sounds",
+      "sha256": "063564703b6094d70718a3e787a55cc9141611e4ecd6b6637f8828f79b4a8c3a"
+    },
+    {
+      "file": "magic-1.ogg",
+      "author": "JaggedStone",
+      "source": "https://opengameart.org/node/29772",
+      "sha256": "119f9061a566c72c1c58444b03f8685b833079ef268dda02fe742eb34d3bc68f"
+    },
+    {
+      "file": "magic-2.ogg",
+      "author": "JaggedStone",
+      "source": "https://opengameart.org/node/29772",
+      "sha256": "84a70f63f3f21e5ba4a48285b760a663d422ad3feddba2f3cbadd94b76cdc52e"
+    },
+    {
+      "file": "magic-3.ogg",
+      "author": "JaggedStone",
+      "source": "https://opengameart.org/node/29772",
+      "sha256": "9fac648a1de869cf9ca2f4b3f1cd47f1766a3ee9d2fdec45831234401d7b2392"
+    },
+    {
+      "file": "magic-4.ogg",
+      "author": "JaggedStone",
+      "source": "https://opengameart.org/node/29772",
+      "sha256": "b7862d109b4013dfb2a389a10f8917203beb0efc458444bc5a1b8ada605cc118"
+    },
+    {
+      "file": "magic-5.ogg",
+      "author": "JaggedStone",
+      "source": "https://opengameart.org/node/29772",
+      "sha256": "69aaaaed729cacb518005a5d24074196db3c5fffc0ed2cd01ad864fbed4a62be"
+    },
+    {
+      "file": "magic-6.ogg",
+      "author": "JaggedStone",
+      "source": "https://opengameart.org/node/29772",
+      "sha256": "0a18ee3460cf3fd79c3771bbf94c20c26d34b65ab60d0b0e15694ffcad815955"
+    },
+    {
+      "file": "magic-7.ogg",
+      "author": "JaggedStone",
+      "source": "https://opengameart.org/node/29772",
+      "sha256": "2817da4f5df69ff993baffd6594a2f2a069f85ee2a02019f97db2246e350a76b"
+    }
+  ]
+}

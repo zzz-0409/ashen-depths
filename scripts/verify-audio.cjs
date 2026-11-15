@@ -19,5 +19,7 @@ module.exports=function verifyAudio(root,referenced,fail){
  }
  for(const ref of referenced)if(!names.has(ref.slice('assets/audio/'.length)))fail('Unmanifested audio reference: '+ref);
  if(fs.existsSync(directory))for(const name of fs.readdirSync(directory))if(/\.(ogg|mp3)$/.test(name)&&!names.has(name))fail('Unmanifested audio file: '+name);
+ const sfxPath=path.join(directory,'sfx/provenance.json');
+ if(fs.existsSync(sfxPath)){try{const sfx=JSON.parse(fs.readFileSync(sfxPath,'utf8')),seen=new Set();if(sfx.license!=='CC0-1.0'||!Array.isArray(sfx.files))throw Error('invalid metadata');for(const item of sfx.files){if(!/^[-a-zA-Z0-9_]+\.ogg$/.test(item.file)||seen.has(item.file))throw Error('invalid SFX filename');seen.add(item.file);const bytes=fs.readFileSync(path.join(directory,'sfx',item.file));if(bytes.toString('ascii',0,4)!=='OggS'||crypto.createHash('sha256').update(bytes).digest('hex')!==item.sha256)throw Error('SFX checksum: '+item.file);if(!credits.includes(item.author)||!credits.includes(item.source))throw Error('SFX credit: '+item.file);verified++;}for(const file of fs.readdirSync(path.join(directory,'sfx')))if(file.endsWith('.ogg')&&!seen.has(file))throw Error('Unmanifested SFX: '+file);}catch(error){fail('SFX verification: '+error.message);}}
  return verified;
 };

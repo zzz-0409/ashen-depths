@@ -1,0 +1,14 @@
+@keyframes panel-arrive{from{opacity:0;transform:translateY(9px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes detail-arrive{from{opacity:0;transform:translateX(6px)}to{opacity:1;transform:none}}
+@keyframes practice-press{0%,55%,100%{transform:translateY(0);box-shadow:0 5px 0 #40636c}65%,85%{transform:translateY(4px);box-shadow:0 1px 0 #40636c;background:#e7ffaf;color:#102127}}
+@keyframes practice-arrow{50%{transform:translateX(5px)}}
+#card .panel-body{animation:panel-arrive .18s ease-out}.icon-pane:not([hidden]){animation:detail-arrive .15s ease-out}
+button{transition:background-color .12s,border-color .12s,box-shadow .12s}button:active:not(:disabled){transform:translateY(1px)}
+.practice-blocked{opacity:.2!important;filter:grayscale(1);pointer-events:none!important}.practice-target{position:relative;outline:3px solid #d8ff91!important;outline-offset:3px;box-shadow:0 0 20px #b0ef7355!important;scroll-margin:24px}
+.practice-target:before{content:'';position:absolute;left:calc(50% - 8px);top:-11px;width:16px;height:10px;background:#e6ffae;clip-path:polygon(0 0,100% 0,50% 100%);z-index:4;text-shadow:0 2px 3px #000;animation:practice-arrow 1s ease-in-out infinite;pointer-events:none}
+#practicePrompt{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:1200;display:grid;grid-template-columns:auto 1fr;gap:3px 14px;padding:12px 20px;border:1px solid #bde789;border-radius:12px;background:#101d25f5;box-shadow:0 5px 30px #000a;pointer-events:none;max-width:90vw}#practicePrompt[hidden]{display:none}#practicePrompt small{grid-column:2;color:#bac8c9}#practicePrompt strong{align-self:center;color:#efffd9}.practice-button-demo{grid-row:span 2;min-width:34px;min-height:34px;padding:5px 10px;display:grid;place-items:center;border:2px solid #bde1e5;border-radius:12px;color:#fff;background:#25414c;animation:practice-press 1.5s infinite;font:bold 17px sans-serif}
+.guided-practice #card{max-height:calc(100dvh - 120px)}.guided-practice .panel-controls{opacity:.5}.guided-practice #tutorialInline{padding:8px 14px;font-size:12px}.guided-practice #tutorialInline p{margin:4px 0}
+@media(prefers-reduced-motion:reduce){#card .panel-body,.icon-pane:not([hidden]),.practice-button-demo,.practice-target:before{animation:none}button{transition:none}}
+.guided-practice #modal{align-items:start;padding-top:65px;padding-bottom:140px}.guided-practice #card{max-height:calc(100dvh - 205px)}.guided-practice #card[data-surface="inventory"] .character-summary{display:none}#practicePrompt{box-sizing:border-box;width:max-content;max-width:calc(100vw - 24px)}#practicePrompt strong{min-width:0}
+
+.guided-practice #card.framed-panel{max-height:calc(100dvh - 205px)!important;min-height:0!important;height:auto!important}.guided-practice #card .panel-body{min-height:0}

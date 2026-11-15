@@ -45,4 +45,18 @@ Twists — assets/audio/ehlers-twists.mp3
 Waking the devil — assets/audio/ehlers-waking-the-devil.mp3
 Warped — assets/audio/ehlers-warped.mp3
 
-Sound effects remain procedural sound design; this replacement covers BGM.
+Sound effects replaced on 2026-11-16 with author-made CC0 recordings.
+
+
+SFX: Kenney (Kenney Vleugels) — RPG Audio (2014), Interface Sounds (2020).
+https://kenney.nl/assets/rpg-audio
+https://kenney.nl/assets/interface-sounds
+CC0-1.0. Original licenses in assets/audio/sfx/KENNEY-*-LICENSE.txt.
+
+Magic Spell SFX — JaggedStone (2014), CC0-1.0.
+https://opengameart.org/node/29772
+Author describes making note sequences and filtering them in Audacity.
+Seven original Ogg files retained, renamed magic-1.ogg through magic-7.ogg.
+No AI generated effects or procedural synthesis fallback in the active runtime.
+Per-file authors, sources and original SHA256: assets/audio/sfx/provenance.json.
+Playback adjusts volume, pan and pitch; original file bytes are unchanged.
