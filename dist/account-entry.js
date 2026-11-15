@@ -36,7 +36,7 @@ function showAccountName(){
  ++accountEpoch;accountNameDraft=rankingAccount?.needsName?'':rankingAccount?.name||'';renderAccountName();
 }
 function renderAccountName(){
- const keys=accountKana?'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんー':'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+ const keys=accountKana?'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをんー.':'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.';
  accountScreen(rankingAccount?.needsName?'冒険者の名前を決める':'名前を変更','<p>ゲーム内で公開する名前 · 2〜16文字 · 後から変更できます</p><input id="accountName" aria-label="冒険者の名前" maxlength="32" value="'+gearEscape(accountNameDraft)+'" oninput="accountNameDraft=this.value"><details><summary>コントローラーで文字入力</summary><button onclick="accountNameDraft=$(\'accountName\').value;accountKana=!accountKana;renderAccountName()">英数字／ひらがな</button><div class="account-keys">'+[...keys].map(c=>'<button onclick="accountNameKey(\''+c+'\')">'+c+'</button>').join('')+'</div><button onclick="accountNameKey(null)">1文字消す</button></details><button onclick="accountSaveName()">この名前で決定</button><button onclick="'+(rankingAccount?.needsName?'accountGuest()':'accountBack()')+'">'+(rankingAccount?.needsName?'ゲストで続ける':'戻る')+'</button><p id="accountMessage" role="status"></p>','accountName');
 }
 function accountNameKey(key){const el=$('accountName');if(!el)return;let chars=[...el.value];if(key===null)chars.pop();else if(chars.length<16)chars.push(key);el.value=chars.join('');accountNameDraft=el.value;}

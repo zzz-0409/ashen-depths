@@ -4,7 +4,7 @@ export function accountNeedsName(name){return !name||/^冒険者[0-9a-f]{6}$/.te
 export function validateAccountName(value){
  if(typeof value!=='string')throw Object.assign(Error('名前を入力してください'),{status:400});
  const name=value.normalize('NFKC').trim().replace(/ +/g,' ');
- if([...name].length<2||[...name].length>16||! /^[\p{L}\p{M}\p{N} _ー・-]+$/u.test(name)||accountNeedsName(name))throw Object.assign(Error('名前は2〜16文字の文字・数字・空白・「_」「-」「・」で入力してください'),{status:400});
+ if([...name].length<2||[...name].length>16||! /^[\p{L}\p{M}\p{N} ._ー・-]+$/u.test(name)||accountNeedsName(name))throw Object.assign(Error('名前は2〜16文字の文字・数字・空白・「.」「_」「-」「・」で入力してください'),{status:400});
  return name;
 }
 const cookie=(request,name)=>(request.headers.get('Cookie')||'').split(';').map(v=>v.trim()).find(v=>v.startsWith(name+'='))?.slice(name.length+1)||'';
