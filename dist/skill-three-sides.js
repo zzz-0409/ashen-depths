@@ -15,5 +15,15 @@ const threeSidesStepBase=stepSignature;stepSignature=(s,dt)=>{
   }playSignatureAudio(125,true,ray.x,ray.y);
  }if(s.time+1e-8>=6.25){s.finished=true;return false;}return true;
 };
-const threeSidesPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{threeSidesPaintBase();for(const s of signatureRenderList(125)){if(!threeSidesValid(s))continue;const color=ELEMENTS[s.build.elements[0]].color;for(const ray of s.rays){if(s.time>=ray.until||!lineClear(ray,ray.end))continue;paintLinkLine(ray,ray.end,color,5);paintLinkLine(ray,ray.end,'#fff3da',2);}for(const [e,m] of s.marks){if(e.hp<=0||!visibleAt(e.x,e.y))continue;for(const a of m.angles)groundRing(e.x+Math.cos(a)*40,e.y+Math.sin(a)*40,6,m.done?'#fff3da':color,2);}}};
-const threeSidesStatusBase=controlSkillStatus;controlSkillStatus=s=>s.mode===125?{label:'三方封殺 '+s.ticks+'/6射',value:s.ticks/6,waiting:s.ticks<6}:threeSidesStatusBase(s);
+function threeSidesPreview(s){
+ const aim=unproject(mouse.x,mouse.y),angle=dist(p,aim)>5?Math.atan2(aim.y-p.y,aim.x-p.x):s.heading,ray={x:p.x,y:p.y,angle},target=tripleHarvestTarget(ray,s.build.radius),mark=target?s.marks.get(target):null;
+ const heading=target?Math.atan2(p.y-target.y,p.x-target.x):0,ready=!!target&&dist(p,target)>=60&&!mark?.done&&(!mark||mark.angles.every(a=>threeSidesSeparated(heading,a)));
+ return {ray,target,mark,heading,ready};
+}
+const threeSidesPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{threeSidesPaintBase();for(const s of signatureRenderList(125)){
+ if(!threeSidesValid(s))continue;const color=ELEMENTS[s.build.elements[0]].color;
+ for(const ray of s.rays){if(s.time>=ray.until||!lineClear(ray,ray.end))continue;paintLinkLine(ray,ray.end,color,5);paintLinkLine(ray,ray.end,'#fff3da',2);}
+ for(const [e,m] of s.marks){if(e.hp<=0||!enemies.includes(e)||!visibleAt(e.x,e.y))continue;for(const a of m.angles)groundRing(e.x+Math.cos(a)*40,e.y+Math.sin(a)*40,6,m.done?'#fff3da':color,2);const q=project(e.x,e.y);ctx.save();for(let i=0;i<3;i++){ctx.fillStyle=i<m.angles.length?'#fff3da':'#34434f';ctx.beginPath();ctx.arc(q.x+(i-1)*12,q.y-68,4,0,Math.PI*2);ctx.fill();}ctx.restore();}
+ if(s.ticks<6){const v=threeSidesPreview(s),tint=v.ready?'#8ee8c6':'#f5ba75';paintLinkLine(v.ray,v.target||echoVolleyEnd(v.ray),tint,1);if(v.target)groundRing(v.target.x+Math.cos(v.heading)*40,v.target.y+Math.sin(v.heading)*40,10,tint,1);}
+}};
+const threeSidesStatusBase=controlSkillStatus;controlSkillStatus=s=>{if(s.mode!==125)return threeSidesStatusBase(s);const v=threeSidesPreview(s),count=v.mark?.angles.length||0;return{label:'三方封殺 '+s.ticks+'/6射 · '+(v.target?(v.mark?.done?'封殺済み':count+'/3方向 · '+(v.ready?'新方向':dist(p,v.target)<60?'近すぎる':'同じ方向')):'照準を敵へ'),value:count/3,waiting:s.ticks<6};};
