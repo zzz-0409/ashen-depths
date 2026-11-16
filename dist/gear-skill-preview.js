@@ -2,8 +2,8 @@
 function gearSkillSource(character,type){
  if(!type||GEM[type]?.kind!=='active')return null;
  for(let slot of GEAR_SLOTS){let item=character[slot],index=item?.sockets.findIndex(s=>s.gem?.type===type)??-1;if(index<0)continue;
-  let a=index,b=index;while(a>0&&item.links[a-1])a--;while(b<item.sockets.length-1&&item.links[b])b++;
-  let supports=[...new Set(item.sockets.slice(a,b+1).map(s=>s.gem?.type).filter(t=>GEM[t]?.kind==='support'&&GEM[t].tags.some(tag=>GEM[type].tags.includes(tag))))];
+  const group=socketGroupIndices(item,index,character);
+  let supports=[...new Set(group.map(i=>item.sockets[i].gem?.type).filter(t=>GEM[t]?.kind==='support'&&GEM[t].tags.some(tag=>GEM[type].tags.includes(tag))))];
   return {slot,level:item.sockets[index].gem.level,supports,forged:item.sockets[index].gem.forged||null};
  }
  return null;
