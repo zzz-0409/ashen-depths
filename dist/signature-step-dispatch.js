@@ -22,6 +22,7 @@ const signatureStepHandlers=new Map([
  [125,twinBeatStepBase],
  [126,thirdStarStepBase],
  [127,steeredCometStepBase],
- [128,signatureStepFallback]
+ [128,stasisVaultStepBase],
+ [129,signatureStepFallback]
 ]);
 stepSignature=(s,dt)=>{const mode=s.mode;return (signatureStepHandlers.get(mode)||(Number.isInteger(mode)&&mode<106?potionSigilStepBase:signatureStepFallback))(s,dt);};
