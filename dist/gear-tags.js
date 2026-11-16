@@ -11,7 +11,7 @@ function tagCount(id){return tagCountFor(p,id)}
 function tagEffectiveCountFor(character,id){return tagCountFor(character,id)}
 function tagCountLabel(id,character=p){const actual=tagCountFor(character,id),effective=tagEffectiveCountFor(character,id);return actual+'部位'+(effective>actual?'（加護で'+effective+'部位相当）':'')}
 function tagStage(id){return Math.min(4,Math.floor(tagEffectiveCountFor(p,id)/2))}
-function tagStat(key){let n=0;for(let [id,tag]of Object.entries(GEAR_TAGS))for(let i=0;i<tagStage(id);i++)n+=tag.stages[i][key]||0;return n}
+function tagStat(key){let n=0;for(let [id,tag]of Object.entries(GEAR_TAGS)){const stage=tagStage(id);for(let i=0;i<stage;i++)n+=tag.stages[i][key]||0;}return n}
 const tagStatsBase=stat;stat=key=>tagStatsBase(key)+tagStat(key);
 const tagForgeBase=forgeItem;forgeItem=(spec,slot,tier,endgame=false,random=Math.random)=>{let it=tagForgeBase(spec,slot,tier,endgame,random),pool=Object.keys(GEAR_TAGS),first=endgame?Math.floor(random()*pool.length):spec.role%pool.length;it.tags=[pool.splice(first,1)[0]];let count=endgame?2+Number(tier>=2||random()<.25):tier>=2?2:1;while(it.tags.length<count)it.tags.push(pool.splice(Math.floor(random()*pool.length),1)[0]);return it};
 const tagItemSaveBase=saveItem;saveItem=(it,expected)=>{let out=tagItemSaveBase(it,expected);if(out&&it.tags!==undefined){if(!Array.isArray(it.tags)||it.tags.length>3||new Set(it.tags).size!==it.tags.length||it.tags.some(t=>!GEAR_TAGS[t]))throw Error('装備タグが不正です');out.tags=[...it.tags]}return out};
