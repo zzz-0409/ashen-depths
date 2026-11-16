@@ -53,9 +53,9 @@ inspectNode=id=>{
 const linkedTreeHtmlBase=treeHtml;
 treeHtml=()=>linkedTreeHtmlBase().replace('<button onclick="zoomTree(-.15)">','<button id="treeCenter" onclick="returnToTreeCenter()" title="左スティック押し込み / Home">中央へ戻る</button><button onclick="zoomTree(-.15)">');
 const linkedTreeHintBase=menuHintText;
-menuHintText=()=>menuSurface==='skills'?'十字キー：線に沿って選択 · ZL：分岐一覧 · A：決定 · B：戻る · X：全閉じ · 左スティック押し込み／Home：中央':linkedTreeHintBase();
+menuHintText=()=>menuSurface==='skills'?'十字キー：線に沿って選択（同時押しで斜め） · L/R：タブ · ZL：分岐一覧 · A：決定 · B：戻る · X：全閉じ · 左スティック押し込み／Home：中央':linkedTreeHintBase();
 addEventListener('keydown',e=>{
  if(e.key!=='Home'||/^(INPUT|SELECT|TEXTAREA)$/.test(e.target?.tagName||'')||menuSelectDialog)return;
  if(returnToTreeCenter()){e.preventDefault();e.stopImmediatePropagation();}
 },true);
-CONTEXT_MENU_HELP.skills.push('十字キーは実線・点線でつながった隣のノードだけに移動します。その方向に接続先がなければ動きません。重なる分岐はZLで接続先一覧へ移り、十字キーとAで選択。Bで元のノードに戻ります。','左スティック押し込み、Homeキー、または「中央へ戻る」で開始ノードに戻ります。ズーム倍率は維持します。左スティックで表示範囲を移動、右スティックで詳細をスクロールできます。');
+CONTEXT_MENU_HELP.skills.push('十字キーは実線・点線でつながった隣のノードだけに移動します。上下と左右の同時押しで斜め方向も選べます。その方向に接続先がなければ動きません。重なる分岐はZLで接続先一覧へ移り、十字キーとAで選択。Bで元のノードに戻ります。','左スティック押し込み、Homeキー、または「中央へ戻る」で開始ノードに戻ります。ズーム倍率は維持します。左スティックで表示範囲を移動、右スティックで詳細をスクロールできます。');
