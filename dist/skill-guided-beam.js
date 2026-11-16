@@ -1,0 +1,16 @@
+const GUIDED_BEAM_SIGNATURE=['導きの照射',16,4,'自分から照準方向へ3秒間の光線。0.25秒ごとにMP2を追加消費して、長さ460・半幅16の直線上の敵へ45%（最大12回）。移動と照準変更に追従する。壁で遮られ、MP2未満では次の照射をせず終了。追加消費はHP代替の効果中もMPで払う。死亡・地域移動・壁越しの移動・1更新で200超の瞬間移動で解除。再発動は置き換え。範囲補正は線幅だけ。','M7 42L42 7M12 47L47 12M5 30L16 41M15 19L27 31M28 7L40 19M33 5H49V21'];
+SIGNATURE_SKILLS.push(GUIDED_BEAM_SIGNATURE);Object.assign(GEM.crafted_11_0,{name:GUIDED_BEAM_SIGNATURE[0],cost:16,cool:4,desc:GUIDED_BEAM_SIGNATURE[3],ability:null,signature:120,tags:['spell','area']});
+SIGNATURE_AUDIO.push(['guidedbeam',710,.3]);SKILL_AUDIO_FAMILIES.metal.add('guidedbeam');
+function guidedBeamValid(s){return !s.finished&&s.owner===p&&s.world===dungeon&&!dead&&p?.hp>0;}
+function guidedBeamEnd(s){const at=d=>({x:p.x+Math.cos(s.heading)*d,y:p.y+Math.sin(s.heading)*d}),end=at(460);if(lineClear(p,end))return end;let low=0,high=460;for(let i=0;i<9;i++){const middle=(low+high)/2;if(lineClear(p,at(middle)))low=middle;else high=middle;}return at(low);}
+function guidedBeamTargets(s){const dx=Math.cos(s.heading),dy=Math.sin(s.heading);return enemies.filter(e=>{const x=e.x-p.x,y=e.y-p.y,along=x*dx+y*dy;return e.hp>0&&along>=0&&along<=460&&Math.abs(x*dy-y*dx)<=16*s.build.radius&&lineClear(p,e);});}
+const guidedBeamCastBase=castCraftedSkill;
+castCraftedSkill=(build,...args)=>{const result=guidedBeamCastBase(build,...args);if(GEM[build.type]?.signature!==120)return result;const s=signatureSpells.at(-1);if(s?.mode!==120)return result;signatureSpells=signatureSpells.filter(v=>v.mode!==120||v===s);Object.assign(s,{owner:p,world:dungeon,finished:false,target:null,heading:s.angle,ticks:0,next:.25,last:{x:p.x,y:p.y}});return result;};
+const guidedBeamStepBase=stepSignature;
+stepSignature=(s,dt)=>{if(s.mode!==120)return guidedBeamStepBase(s,dt);if(!guidedBeamValid(s)){s.finished=true;return false;}if(paused||!Number.isFinite(dt)||dt<=0)return true;if(dist(p,s.last)>200||!lineClear(s.last,p)){s.finished=true;return false;}s.last={x:p.x,y:p.y};
+ const aim=unproject(mouse.x,mouse.y);if(dist(p,aim)>5)s.heading=Math.atan2(aim.y-p.y,aim.x-p.x);s.time+=dt;
+ while(s.ticks<12&&s.time+1e-8>=s.next){if(!guidedBeamValid(s)||!Number.isFinite(p.mp)||p.mp<2){s.finished=true;return false;}p.mp-=2;s.ticks++;s.next=(s.ticks+1)*.25;const targets=guidedBeamTargets(s);for(const e of targets){if(!guidedBeamValid(s))return false;if(e.hp>0&&enemies.includes(e))spellHit(e,s.damage*.45,s.build);}if(s.ticks%2===0)playSignatureAudio(120,true,p.x,p.y);}
+ if(s.ticks>=12){s.finished=true;return false;}return true;};
+const guidedBeamPaintBase=paintSignatureSpells;
+paintSignatureSpells=()=>{guidedBeamPaintBase();const list=signatureRenderList(120);if(!list.length)return;for(const s of list){if(!guidedBeamValid(s))continue;const end=guidedBeamEnd(s),color=ELEMENTS[s.build.elements[0]].color,flash=s.ticks>0&&s.time-s.ticks*.25<.08,nx=-Math.sin(s.heading)*16*s.build.radius,ny=Math.cos(s.heading)*16*s.build.radius;for(const side of [-1,1])paintLinkLine({x:p.x+nx*side,y:p.y+ny*side},{x:end.x+nx*side,y:end.y+ny*side},color,1);paintLinkLine(p,end,color,flash?7:2);if(flash)paintLinkLine(p,end,'#fff4d2',2);groundRing(end.x,end.y,8,color,2);}};
+const guidedBeamStatusBase=controlSkillStatus;controlSkillStatus=s=>s.mode===120?{label:'照射 '+s.ticks+'/12 · MP2ずつ',value:s.ticks/12,waiting:true}:guidedBeamStatusBase(s);
