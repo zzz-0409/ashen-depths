@@ -12,7 +12,7 @@ function controlSkillStatus(s){
  if(s.mode===64){label='転位まで '+Math.max(0,.8-s.time).toFixed(1)+'秒';value=s.time/.8;}
  if(s.mode===65){label='反対側へ回る';value=1-s.time/5;waiting=true;}
  if(s.mode===66){label='分配 '+s.targets.filter(e=>e.hp>0&&dist(e,s)<=180*s.build.radius&&lineClear(s,e)).length+'体';value=s.time/.9;}
- if(s.mode===67){let left=s.guards.filter(e=>e.hp>0).length;label=left?'護衛 残り'+left+'体':s.guards.length?'本命へ射線を通す':'単体攻撃を準備';value=1-s.time/6;waiting=left>0;}
+ if(s.mode===67){label=s.pending?'王手成立':'本命を先に倒す';value=1-s.time/6;waiting=!s.pending;}
  if(s.mode===68){label=s.lantern?'生命灯を拾う':'標的を倒す';value=s.lantern?(s.expires-s.time)/6:1-s.time/4;waiting=true;}
  return label?{label,value:Math.max(0,Math.min(1,Number.isFinite(value)?value:0)),waiting}:null;
 }
