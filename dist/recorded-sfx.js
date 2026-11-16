@@ -7,19 +7,34 @@ const RECORDED_SFX={
  fire:['magic-1'],frost:['magic-2'],arc:['magic-3'],water:['magic-4'],wind:['magic-5'],poison:['magic-6'],vortex:['magic-7'],
  heal:['magic-4'],screech:['magic-6'],hurt:['rpg-chop'],death:['magic-7'],warning:['magic-3']
 };
-const recordedBuffers=new Map(),recordedPending=new Map(),recordedGates=new Map();let recordedVoices=0,recordedSerial=0;
+const recordedBuffers=new Map(),recordedPending=new Map(),recordedGates=new Map();let recordedVoices=0;
+const recordedVariants=new Map(),recordedActive=new Set();
+const RECORDED_IMPORTANT=new Set(["ui","confirm","open","close","hurt","death","warning","level","seal"]);
+const RECORDED_UI=new Set(["ui","confirm","open","close","loot","level","seal"]);
+function stopRecordedSfx(){for(const voice of [...recordedActive]){try{voice.source.stop();}catch{}voice.release();}recordedGates.clear();}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)stopRecordedSfx();});
 async function loadRecordedSfx(file){if(recordedBuffers.has(file))return recordedBuffers.get(file);if(!audioContext)return null;if(!recordedPending.has(file)){const context=audioContext;recordedPending.set(file,(async()=>{try{const response=await fetch('assets/audio/sfx/'+file+'.ogg');if(!response.ok)throw Error('SFX HTTP '+response.status);const buffer=await context.decodeAudioData(await response.arrayBuffer());recordedBuffers.set(file,buffer);return buffer;}catch{return null;}finally{recordedPending.delete(file);}})());}return recordedPending.get(file);}
 async function preloadRecordedSfx(){return Promise.all([...new Set(Object.values(RECORDED_SFX).flat())].map(loadRecordedSfx));}
 function recordedPlay(name,x=p?.x||0,y=p?.y||0,options={}){
  if(!audioContext||audioContext.state!=='running'||!audioPrefs.enabled||document.hidden)return false;
  const files=RECORDED_SFX[name]||RECORDED_SFX.fire,now=audioContext.currentTime,gate=options.gate??(name==='step'?.15:name==='impact'?.055:name==='ui'?.07:.04),key=options.key||name;
- if(now<(recordedGates.get(key)||0)||recordedVoices>=20)return false;recordedGates.set(key,now+gate);
- const file=files[(recordedSerial++)%files.length],buffer=recordedBuffers.get(file);if(!buffer){loadRecordedSfx(file);return false;}
+ const important=RECORDED_IMPORTANT.has(name),ui=RECORDED_UI.has(name);
+ // Keep four voices available for controls, player damage and warnings during crowds.
+ if(now<(recordedGates.get(key)||0)||recordedVoices>=(important?20:name==='step'?12:16))return false;
+ const familyCount=[...recordedActive].filter(v=>v.name===name).length;
+ if(!important&&familyCount>=(name==='step'?2:name==='impact'?6:4))return false;
+ let panValue=0,attenuation=1;
+ if(!ui&&started&&Number.isFinite(x)&&Number.isFinite(y)){const pos=project(x,y);panValue=clamp((pos.x-W/2)/Math.max(1,W/2),-.75,.75);if(!important){const distance=Math.hypot(x-(p?.x||0),y-(p?.y||0));if(distance>1400)return false;attenuation=1/(1+Math.pow(distance/450,2));}}
+ const variant=recordedVariants.get(name)||0,file=files[variant%files.length],buffer=recordedBuffers.get(file);
+ if(!buffer){loadRecordedSfx(file);return false;}
  const source=audioContext.createBufferSource(),gain=audioContext.createGain(),pan=audioContext.createStereoPanner();source.buffer=buffer;source.playbackRate.value=options.rate||1;
- gain.gain.value=options.volume??(name==='step'?.22:['ui','confirm','open','close'].includes(name)?.45:.7);
- pan.pan.value=started&&Number.isFinite(x)&&Number.isFinite(y)?clamp((project(x,y).x-W/2)/(W/2),-.75,.75):0;
- source.connect(gain);gain.connect(pan);pan.connect(sfxBus);recordedVoices++;source.onended=()=>{recordedVoices--;source.disconnect();gain.disconnect();pan.disconnect();};source.start(now+(options.delay||0));return true;
+ gain.gain.value=(options.volume??(name==='step'?.22:['ui','confirm','open','close'].includes(name)?.45:.7))*attenuation;pan.pan.value=panValue;
+ const voice={name,source,release(){if(!recordedActive.delete(voice))return;recordedVoices--;source.disconnect();gain.disconnect();pan.disconnect();}};
+ source.connect(gain);gain.connect(pan);pan.connect(sfxBus);recordedActive.add(voice);recordedVoices++;source.onended=voice.release;
+ try{source.start(now+(options.delay||0));}catch{voice.release();return false;}
+ recordedGates.set(key,now+gate);recordedVariants.set(name,(variant+1)%files.length);return true;
 }
+
 createAmbience=()=>{};
 // Legacy warning callers also resolve to recordings; no oscillators/noise voices.
 soundVoice=(type,freq,end,duration,volume,pan,delay=0)=>recordedPlay(type==='noise'?'impact':'warning',p?.x,p?.y,{volume:Math.min(.7,(volume||.1)*4),delay,gate:.12});

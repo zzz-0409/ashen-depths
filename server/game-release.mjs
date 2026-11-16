@@ -1,1 +1,1 @@
-export const SERVER_RELEASE='51df00d31f639ad2c0e9cf4dd338ee921cc275aca4c4b9e2f5c79a64bb6c111a';
+export const SERVER_RELEASE='7003f6bff1bf8d2a26b00f6bd0fe0eb072813e35465782cc08cd8779d44a157f';
