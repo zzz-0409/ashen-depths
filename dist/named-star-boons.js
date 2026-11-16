@@ -5,7 +5,7 @@ const NAMED_STAR_BOONS={
  Lep:['月兎の切り返し','回避成功後2秒以内に通常攻撃を命中させると、回避の残り待ち時間を解消しSP10回復（最大SPまで）。再発動は6秒後。回避・通常攻撃のSP消費は通常どおり。空振り・スキル・継続ダメージでは発動しない。地域移動・訓練リセット・加護解除で準備は消える。'],
  Hor:['刻を刻む腕','通常攻撃の最初の直撃でSPを追加5消費し、装備・割当済みのスキルのうち残り待ち時間が最長の1種類を最大0.4秒短縮する。同じスキルの複数枠はまとめて短縮。SP不足・待機中のスキルがないときは消費しない。通常攻撃1回につき一度。回避・通常攻撃・必殺技の待ち時間は対象外。'],
  Leo:['獅子の挑戦','6秒以内に同じ討伐敵へ通常攻撃を3回命中させると、8秒間その敵を決闘相手にする（1攻撃1段階）。決闘中、その敵への直撃威力40%増、他の敵への直撃威力30%減。時間内に直撃で倒すとSP40回復。継続ダメージ・訓練標的は対象外。途中で別の敵を通常攻撃すると準備し直し。地域移動・加護解除で解除。'],
- Mon:['三彩の聖杯','実在する討伐敵に12秒以内に異なる3種類の三属性反応を起こすと、生命瓶を1回分補充（最大3）。最初の反応から計時し、同じ組み合わせの連打では進まない。補充後15秒待機。瓶が満タン・訓練標的・継続ダメージは対象外。地域移動・訓練リセット・加護解除で記録は消える。'],
+ Mon:['三彩の聖杯','実在する討伐敵に12秒以内に異なる3種類の三属性反応を起こすと、HPポーション・小を1個補充（所持3個まで）。最初の反応から計時し、同じ組み合わせの連打では進まない。補充後15秒待機。HPポーション・小を3個以上所持・訓練標的・継続ダメージは対象外。地域移動・訓練リセット・加護解除で記録は消える。'],
  Aqr:['帰還の星泉','回避開始地点に4秒間の泉を残す（再設置8秒）。泉から90以上離れた後、28以内へ戻ると泉を消費しSP20・MP10回復。壁越しでは回復しない。両方満タンなら消費せず待機。地域移動・訓練リセット・加護解除で泉は消える。'],
  Tau:['雄牛の返し角','被弾で実際に失ったHPを痛みとして蓄積（最大HPの25%まで）。次の通常攻撃の最初の命中時、SP15と痛みを全消費し、蓄積値の2倍をその一撃の威力に加える。SP不足・空振りでは保持。防いだダメージ・HP消費では蓄積しない。地域移動・訓練リセット・加護解除で消える。'],
  UMa:['巨熊の構え','通常攻撃を3回命中させると構えが完成（1回の攻撃につき1段階）。SP20以上で次に被ダメージを受けるとSP20と構えを消費し、その攻撃の威力を半減。無敵・回避・完全吸収でHPが減らなければ消費しない。SP不足なら構えを保持。スキル・継続ダメージ・必殺技では蓄積しない。地域移動・訓練リセット・加護解除で構えは消える。'],
@@ -93,11 +93,14 @@ const aquaSpringGroundBase=drawGroundEffects;drawGroundEffects=()=>{aquaSpringGr
 function advanceUnicornChalice(dt){
  syncNamedBoons();if(dead||!p||p.hp<=0){unicornRecipes.clear();unicornTime=0;return;}if(!started||paused||!Number.isFinite(dt)||dt<=0)return;unicornCooldown=Math.max(0,unicornCooldown-dt);unicornTime=Math.max(0,unicornTime-dt);if(!unicornTime)unicornRecipes.clear();
 }
+// Keep old-save test/runtime compatibility while replenishing the actual consumable inventory.
+function unicornPotionCount(){if(typeof ensurePotions==='function'){ensurePotions();return p.potions.hp0||0;}return p.flasks;}
+function grantUnicornPotion(){if(typeof ensurePotions==='function'){ensurePotions();p.potions.hp0=Math.min(3,(p.potions.hp0||0)+1);}else p.flasks=Math.min(3,p.flasks+1);}
 const unicornReactionBase=triggerReaction;triggerReaction=(origin,r,power)=>{
- syncNamedBoons();let owner=p,eligible=started&&!paused&&!dead&&p.hp>0&&p.flasks<3&&unicornCooldown<=0&&hasStarBoon(namedBoonIndices.Mon)&&origin?.hp>0&&!origin.dummy&&!origin.dotTick&&enemies.includes(origin)&&!!SPECIES[origin.species]&&Number.isFinite(power)&&power>0&&r?.elements?.length===3&&REACTIONS[r.key]===r;
- let result=unicornReactionBase(origin,r,power);if(!eligible||p!==owner||dead||p.hp<=0||p.flasks>=3)return result;
+ syncNamedBoons();let owner=p,eligible=started&&!paused&&!dead&&p.hp>0&&unicornPotionCount()<3&&unicornCooldown<=0&&hasStarBoon(namedBoonIndices.Mon)&&origin?.hp>0&&!origin.dummy&&!origin.dotTick&&enemies.includes(origin)&&!!SPECIES[origin.species]&&Number.isFinite(power)&&power>0&&r?.elements?.length===3&&REACTIONS[r.key]===r;
+ let result=unicornReactionBase(origin,r,power);if(!eligible||p!==owner||dead||p.hp<=0||unicornPotionCount()>=3)return result;
  if(!unicornRecipes.size)unicornTime=12;if(unicornRecipes.size<3)unicornRecipes.add(r.key);if(unicornRecipes.size<3)return result;
- if(!worldTransaction(()=>{p.flasks=Math.min(3,p.flasks+1);})){if(p!==owner)namedBoonOwner=p;return result;}unicornRecipes.clear();unicornTime=0;unicornCooldown=15;burst(p.x,p.y,65,'#e4bfff');playSound('heal',p.x,p.y);say('三彩の聖杯 · 生命瓶 +1');return result;
+ if(!worldTransaction(grantUnicornPotion)){if(p!==owner)namedBoonOwner=p;return result;}unicornRecipes.clear();unicornTime=0;unicornCooldown=15;burst(p.x,p.y,65,'#e4bfff');playSound('heal',p.x,p.y);say('三彩の聖杯 · HPポーション・小 +1');return result;
 };
 const unicornGroundBase=drawGroundEffects;drawGroundEffects=()=>{unicornGroundBase();if(!started||!p||dead||paused||namedBoonOwner!==p||!hasStarBoon(namedBoonIndices.Mon)||!unicornRecipes.size)return;ctx.save();let q=project(p.x,p.y);ctx.fillStyle='#e4bfff';for(let i=0;i<unicornRecipes.size;i++){ctx.beginPath();ctx.moveTo(q.x-27,q.y-80+i*10);ctx.lineTo(q.x-23,q.y-76+i*10);ctx.lineTo(q.x-27,q.y-72+i*10);ctx.lineTo(q.x-31,q.y-76+i*10);ctx.closePath();ctx.fill();}ctx.restore();};
 
