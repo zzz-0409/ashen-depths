@@ -52,6 +52,8 @@ function frame(t){
  let dt=Math.min(.04,(t-last)/1000||.016);last=t;
  frameDue+=Math.max(1,Math.floor((t-frameDue+.01)/interval)+1)*interval;
  update(dt);
+ // Full-screen title/loading overlays hide the canvas, but inputs must keep polling.
+ if(!started||(typeof assetRequest!=='undefined'&&assetRequest)){framePaused=null;return;}
  // Input and menu logic keep their60Hz cadence; only the paused canvas slows down.
  if(framePaused!==paused){framePaused=paused;frameBackdropDue=t;}
  if(paused){let backgroundInterval=1000/30;if(t+.01<frameBackdropDue)return;frameBackdropDue+=Math.max(1,Math.floor((t-frameBackdropDue+.01)/backgroundInterval)+1)*backgroundInterval;}
