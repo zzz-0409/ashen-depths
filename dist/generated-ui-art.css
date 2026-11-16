@@ -176,3 +176,7 @@
 .art-grazehalo .generated-art-paint{background-image:url('assets/skill-graze-ring-icon-v1.png');background-size:100% 100%}.art-grazehalo-ready .art-grazehalo>.generated-art-paint{display:block}.art-grazehalo-ready .art-grazehalo>.generated-art-fallback{visibility:hidden}
 
 .art-spellbreaker .generated-art-paint{background-image:url('assets/skill-spellbreaker-icon-v1.png');background-size:100% 100%}.art-spellbreaker-ready .art-spellbreaker>.generated-art-paint{display:block}.art-spellbreaker-ready .art-spellbreaker>.generated-art-fallback{visibility:hidden}
+
+.art-vacantaltar .generated-art-paint{background-image:url('assets/skill-vacant-altar-icon-v1.png');background-size:100% 100%}.art-vacantaltar-ready .art-vacantaltar>.generated-art-paint{display:block}.art-vacantaltar-ready .art-vacantaltar>.generated-art-fallback{visibility:hidden}
+
+.art-sharedcomet .generated-art-paint{background-image:url('assets/skill-shared-comet-icon-v1.png');background-size:100% 100%}.art-sharedcomet-ready .art-sharedcomet>.generated-art-paint{display:block}.art-sharedcomet-ready .art-sharedcomet>.generated-art-fallback{visibility:hidden}
