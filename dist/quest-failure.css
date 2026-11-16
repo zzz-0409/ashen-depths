@@ -1,0 +1,4 @@
+body:has([data-quest-outcome]) header,body:has([data-quest-outcome]) footer,body:has([data-quest-outcome]) #quest{visibility:hidden}
+#modal:has([data-quest-outcome]){background:radial-gradient(ellipse at center,#2d1018,#09080cf5 75%);padding:24px;z-index:1000}
+#card[data-quest-outcome]{width:min(760px,100%);max-height:calc(100dvh - 48px);overflow:auto;text-align:center;border:1px solid #a65356;background:#150f14;box-shadow:0 0 90px #c42c2726}
+#card[data-quest-outcome]>.panel-heading{justify-content:center}#card[data-quest-outcome] h1{font-size:clamp(32px,6vw,64px);color:#ff9a8b;margin:8px 0 20px}.quest-outcome-label{letter-spacing:.32em;color:#df7c72}.quest-outcome-symbol{font-size:48px;color:#e56c64}.quest-outcome-reason{font-size:20px}.quest-outcome [data-outcome-primary]{font-size:20px;min-height:56px;padding:12px 40px;margin-top:16px;border:2px solid #e0b570}.quest-outcome [data-outcome-primary]:focus{outline:4px solid #fff1a2;outline-offset:4px}
