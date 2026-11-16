@@ -11,7 +11,7 @@ function linkedTreeDestination(id,dx,dy){
 }
 function returnToTreeCenter(){
  if(!paused||menuSurface!=='skills'||!$('treeViewport'))return false;
- treeFocus=0;inspectNode(0);menuTreeFocus();
+ treePadChord=null;treeFocus=0;inspectNode(0);menuTreeFocus();
  const vp=$('treeViewport'),n=NODES[0];
  vp.scrollLeft=n.x*treeZoom-vp.clientWidth/2;vp.scrollTop=n.y*treeZoom-vp.clientHeight/2;
  menuDirection=null;menuRepeat=.25;padCursor.active=false;playSound('ui');return true;
@@ -39,7 +39,7 @@ function chooseLinkedTreeNode(from,to){
  if(menuSurface!=='skills'||treeFocus!==from||!NODES[from]?.links.includes(to))return false;
  treeFocus=to;inspectNode(to);menuTreeFocus();padCursor.active=false;playSound('ui');return true;
 }
-function focusTreeLinkedChoices(){const button=$('treeLinkedChoices')?.querySelector('button');if(button){menuFocusElement(button);playSound('ui');}}
+function focusTreeLinkedChoices(){treePadChord=null;const button=$('treeLinkedChoices')?.querySelector('button');if(button){menuFocusElement(button);playSound('ui');}}
 const linkedTreeInspectBase=inspectNode;
 inspectNode=id=>{
  const result=linkedTreeInspectBase(id),detail=$('nodeDetail'),n=NODES[id];
