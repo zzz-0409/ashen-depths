@@ -3,3 +3,5 @@
 /* Give item browsing more space while keeping the selected item's details readable. */
 @media(min-width:1000px){.loadout-body>.icon-browser{grid-template-columns:minmax(0,3fr) minmax(320px,2fr);gap:12px}.loadout-body .icon-list{grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.loadout-body .icon-detail{padding:12px}}
 @media(min-width:701px) and (max-width:999px){.loadout-body>.icon-browser{grid-template-columns:minmax(0,1.2fr) minmax(260px,1fr);gap:10px}.loadout-body .icon-list{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.loadout-body .icon-detail{padding:10px}}
+
+.loadout-path-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.loadout-path-actions button{padding:8px 12px}
