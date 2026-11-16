@@ -31,7 +31,7 @@ stepSignature=(s,dt)=>{
 };
 const liveConduitPaintBase=paintSignatureSpells;
 paintSignatureSpells=()=>{
- liveConduitPaintBase();for(const s of signatureSpells){if(s.mode!==114||!liveConduitValid(s))continue;
+ liveConduitPaintBase();const renderList=signatureRenderList(114,114);if(!renderList.length)return;for(const s of renderList){if(s.mode!==114||!liveConduitValid(s))continue;
   const e=s.target,color=ELEMENTS[s.build.elements[0]].color,dx=e.x-p.x,dy=e.y-p.y,len=Math.hypot(dx,dy);if(len<1)continue;
   const nx=-dy/len*20*s.build.radius,ny=dx/len*20*s.build.radius;
   for(const side of [-1,1])paintLinkLine({x:p.x+nx*side,y:p.y+ny*side},{x:e.x+nx*side,y:e.y+ny*side},color,1);

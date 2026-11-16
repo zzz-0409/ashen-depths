@@ -1,0 +1,2 @@
+const groupedSignaturePaintBase=paintSignatureSpells;
+paintSignatureSpells=()=>withSignatureRenderGroups(groupedSignaturePaintBase);

@@ -39,7 +39,7 @@ stepSignature=(s,dt)=>{
 };
 const grudgeMarkPaintBase=paintSignatureSpells;
 paintSignatureSpells=()=>{
- grudgeMarkPaintBase();for(const s of signatureSpells){if(s.mode!==105||!grudgeMarkValid(s)||!visibleAt(s.target.x,s.target.y))continue;
+ grudgeMarkPaintBase();const renderList=signatureRenderList(105,105);if(!renderList.length)return;for(const s of renderList){if(s.mode!==105||!grudgeMarkValid(s)||!visibleAt(s.target.x,s.target.y))continue;
   const e=s.target,color=s.loss>0?ELEMENTS[s.build.elements[0]].color:'#8c8584';
   groundRing(e.x,e.y,36,color,s.loss>0?4:1);groundRing(e.x,e.y,50*(1-s.time/5),'#ffe4aa',2);
   if(s.loss>0){paintLinkLine({x:e.x-18,y:e.y-18},{x:e.x+18,y:e.y+18},color,3);paintLinkLine({x:e.x+18,y:e.y-18},{x:e.x-18,y:e.y+18},color,3);}

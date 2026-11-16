@@ -66,8 +66,8 @@ const earlySignatureStep=stepSignature;stepSignature=(s,dt)=>{
  return s.bolts.length>0;
 };
 const earlySignaturePaint=paintSignatureSpells;paintSignatureSpells=()=>{
- earlySignaturePaint();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<8||s.mode>=16)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ earlySignaturePaint();const renderList=signatureRenderList(8,15);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<8||s.mode>=16)continue;let color=ELEMENTS[s.build.elements[0]].color;
   if(s.mode===12&&lineClear(p,s)){let a=project(p.x,p.y),b=project(s.x,s.y);ctx.beginPath();ctx.moveTo(a.x,a.y-15);ctx.lineTo(b.x,b.y-15);ctx.strokeStyle=color;ctx.lineWidth=4;ctx.stroke();groundRing(s.x,s.y,24,color,2);}
   if((s.mode===13&&s.time<=4||s.mode===14&&s.time<=3)&&visibleAt(s.x,s.y)){let pos=project(s.x,s.y);groundRing(s.x,s.y,30,color,2);ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(pos.x-13,pos.y);ctx.lineTo(pos.x,pos.y-(s.mode===13?60:90));ctx.lineTo(pos.x+13,pos.y);ctx.stroke();glowAt({x:pos.x,y:pos.y-(s.mode===13?55:85)},20,color,.7);}
   for(let b of s.bolts){if(!visibleAt(b.x,b.y))continue;let pos=project(b.x,b.y);ctx.strokeStyle=color;ctx.lineWidth=b.kind==='pierce'?4:2;ctx.beginPath();b.trail.forEach((v,i)=>{let q=project(v.x,v.y);i?ctx.lineTo(q.x,q.y-12):ctx.moveTo(q.x,q.y-12)});ctx.lineTo(pos.x,pos.y-12);ctx.stroke();glowAt({x:pos.x,y:pos.y-12},b.kind==='fragment'?12:23,color,.7);circle(pos.x,pos.y-12,3,'#fff9e8');}

@@ -10,7 +10,7 @@ const pursuitChainStepBase=stepSignature;stepSignature=(s,dt)=>{
  s.x=e.x;s.y=e.y;s.time=Math.round((s.time+dt)*1e6)/1e6;
  if(s.time>=2){spellHit(e,s.damage*(1+s.travel/100),s.build);burst(s.x,s.y,65,'#ffe1a3');playSignatureAudio(83,true,s.x,s.y);return false;}return true;
 };
-const pursuitChainPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{pursuitChainPaintBase();ctx.save();for(let s of signatureSpells){if(s.mode!==83||s.owner!==p||!visibleAt(s.x,s.y))continue;if(typeof paintPursuitChainCharge==='function'&&paintPursuitChainCharge(s))continue;groundRing(s.x,s.y,40+s.travel/15,'#ffe1a3',2+s.travel/100);let a=project(s.x,s.y);ctx.strokeStyle='#ffe1a3';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x-20,a.y-55);ctx.lineTo(a.x+20,a.y-20);ctx.moveTo(a.x+20,a.y-55);ctx.lineTo(a.x-20,a.y-20);ctx.stroke();}ctx.restore();};
+const pursuitChainPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{pursuitChainPaintBase();const renderList=signatureRenderList(83,83);if(!renderList.length)return;ctx.save();for(const s of renderList){if(s.mode!==83||s.owner!==p||!visibleAt(s.x,s.y))continue;if(typeof paintPursuitChainCharge==='function'&&paintPursuitChainCharge(s))continue;groundRing(s.x,s.y,40+s.travel/15,'#ffe1a3',2+s.travel/100);let a=project(s.x,s.y);ctx.strokeStyle='#ffe1a3';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(a.x-20,a.y-55);ctx.lineTo(a.x+20,a.y-20);ctx.moveTo(a.x+20,a.y-55);ctx.lineTo(a.x-20,a.y-20);ctx.stroke();}ctx.restore();};
 const pursuitChainStatusBase=controlSkillStatus;controlSkillStatus=s=>s.mode===83?{label:'鎖の威力 '+Math.round(100+s.travel)+'%',value:Math.min(1,s.time/2),waiting:true}:pursuitChainStatusBase(s);
 
 // Sample each world update so fixed spell substeps neither reject slow frames nor miss fast reversals.

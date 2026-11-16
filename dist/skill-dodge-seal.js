@@ -21,8 +21,8 @@ const dodgeSealStepBase=stepSignature;stepSignature=(s,dt)=>{
  return s.seals.length>0||(s.time<8&&s.charges>0);
 };
 const dodgeSealPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- dodgeSealPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode!==71)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ dodgeSealPaintBase();const renderList=signatureRenderList(71,71);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode!==71)continue;let color=ELEMENTS[s.build.elements[0]].color;
  if(s.time<8&&s.charges>0){let q=project(p.x,p.y);for(let i=0;i<s.charges;i++)circle(q.x+(i-(s.charges-1)/2)*9,q.y-60,3,color);}
  for(let mark of s.seals){let progress=clamp(1-(mark.at-s.time)/.8,0,1);groundRing(mark.x,mark.y,110*s.build.radius,color,1);groundRing(mark.x,mark.y,110*s.build.radius*(1-progress),color,3);boundarySigil(mark,22,color,progress*Math.PI,4);}
  }ctx.restore();

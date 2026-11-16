@@ -22,8 +22,8 @@ const exertionStepBase=stepSignature;stepSignature=(s,dt)=>{
  return true;
 };
 const exertionPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- exertionPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode!==70)continue;let color=ELEMENTS[s.build.elements[0]].color,r=38+30*s.spent/40;
+ exertionPaintBase();const renderList=signatureRenderList(70,70);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode!==70)continue;let color=ELEMENTS[s.build.elements[0]].color,r=38+30*s.spent/40;
  groundRing(p.x,p.y,r,color,1.5);boundarySigil({...s,x:p.x,y:p.y},r,color,s.time*1.8,4);
  let q=project(p.x,p.y);for(let i=0;i<5;i++){let a=-Math.PI/2+i*Math.PI*2/5;circle(q.x+Math.cos(a)*r,q.y+Math.sin(a)*r*.5,2+(s.spent>=(i+1)*8?3:0),color);}
  }ctx.restore();

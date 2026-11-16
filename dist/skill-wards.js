@@ -57,8 +57,8 @@ const wardSignatureStep=stepSignature;stepSignature=(s,dt)=>{
  return s.mode===29&&s.time<6;
 };
 const wardSignaturePaint=paintSignatureSpells;paintSignatureSpells=()=>{
- wardSignaturePaint();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<24||s.mode>=32||s.finished||!visibleAt(s.x,s.y))continue;let color=ELEMENTS[s.build.elements[0]].color,r=s.mode===24?120:s.mode===25?65:s.mode===26?140:s.mode===28?150:35;groundRing(s.x,s.y,r*s.build.radius,color,s.mode===24?4:2);
+ wardSignaturePaint();const renderList=signatureRenderList(24,31);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<24||s.mode>=32||s.finished||!visibleAt(s.x,s.y))continue;let color=ELEMENTS[s.build.elements[0]].color,r=s.mode===24?120:s.mode===25?65:s.mode===26?140:s.mode===28?150:35;groundRing(s.x,s.y,r*s.build.radius,color,s.mode===24?4:2);
   let pos=project(s.x,s.y);if(s.mode===27||s.mode===30){ctx.strokeStyle=color;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(pos.x-12,pos.y-65);ctx.lineTo(pos.x+12,pos.y-40);ctx.moveTo(pos.x+12,pos.y-65);ctx.lineTo(pos.x-12,pos.y-40);ctx.stroke();}
   if(s.mode===24||s.mode===28){for(let n=0;n<6;n++){let a=n*Math.PI/3+s.time*.4,base=project(s.x+Math.cos(a)*r*s.build.radius,s.y+Math.sin(a)*r*s.build.radius);ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(base.x,base.y);ctx.lineTo(base.x,base.y-35);ctx.stroke();}}
   if(s.mode===26)glowAt(pos,55,color,.2+.15*Math.sin(s.time*6));

@@ -37,7 +37,7 @@ stepSignature=(s,dt)=>{
 };
 const isolationBellPaintBase=paintSignatureSpells;
 paintSignatureSpells=()=>{
- isolationBellPaintBase();for(const s of signatureSpells){if(s.mode!==104||!isolationBellValid(s))continue;
+ isolationBellPaintBase();const renderList=signatureRenderList(104,104);if(!renderList.length)return;for(const s of renderList){if(s.mode!==104||!isolationBellValid(s))continue;
   const e=s.target,color=ELEMENTS[s.build.elements[0]].color;
   if(visibleAt(e.x,e.y)){groundRing(e.x,e.y,38,'#ffe4aa',3);groundRing(e.x,e.y,52*(1-s.time/5),color,2);}
   for(const escort of s.escorts)if(escort.hp>0&&enemies.includes(escort)&&visibleAt(escort.x,escort.y)){groundRing(escort.x,escort.y,22,color,2);if(lineClear(e,escort))paintLinkLine(e,escort,color,1);}

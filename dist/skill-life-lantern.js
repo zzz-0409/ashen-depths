@@ -24,8 +24,8 @@ const lifeLanternStepBase=stepSignature;stepSignature=(s,dt)=>{
  return s.time<4;
 };
 const lifeLanternPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- lifeLanternPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode!==68)continue;
+ lifeLanternPaintBase();const renderList=signatureRenderList(68,68);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode!==68)continue;
   if(!s.lantern){if(s.target.hp>0){let color=ELEMENTS[s.build.elements[0]].color;boundarySigil(s.target,30,color,s.time*2,4);groundRing(s.target.x,s.target.y,22,color,1);}continue;}
   let pos=project(s.x,s.y),lift=48+Math.sin(s.time*4)*4,color='#b7e8ab';ctx.globalAlpha=Math.min(1,(s.expires-s.time)/1.2);
   groundRing(s.x,s.y,30,color,1.5);boundarySigil(s,16,color,-s.time*2,4);

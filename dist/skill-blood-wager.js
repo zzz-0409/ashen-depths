@@ -27,6 +27,6 @@ stepSignature=(s,dt)=>{
  s.time+=dt;if(s.time+1e-8>=5){s.finished=true;return false;}return true;
 };
 const bloodWagerPaintBase=paintSignatureSpells;
-paintSignatureSpells=()=>{bloodWagerPaintBase();for(const s of signatureSpells){if(s.mode!==107||!bloodWagerValid(s)||!visibleAt(s.target.x,s.target.y))continue;const e=s.target;groundRing(e.x,e.y,34,'#e7838b',3);groundRing(e.x,e.y,48*(1-s.time/5),ELEMENTS[s.build.elements[0]].color,2);}};
+paintSignatureSpells=()=>{bloodWagerPaintBase();const renderList=signatureRenderList(107,107);if(!renderList.length)return;for(const s of renderList){if(s.mode!==107||!bloodWagerValid(s)||!visibleAt(s.target.x,s.target.y))continue;const e=s.target;groundRing(e.x,e.y,34,'#e7838b',3);groundRing(e.x,e.y,48*(1-s.time/5),ELEMENTS[s.build.elements[0]].color,2);}};
 const bloodWagerStatusBase=controlSkillStatus;
 controlSkillStatus=s=>s.mode===107?{label:'討伐でHP '+Math.round(s.stake*2)+'回復 · '+Math.max(0,5-s.time).toFixed(1)+'秒',value:s.time/5,waiting:true}:bloodWagerStatusBase(s);

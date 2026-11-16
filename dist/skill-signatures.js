@@ -69,9 +69,25 @@ const signatureUpdateBase=update;update=dt=>{let running=started&&!paused&&!dead
 const signatureWorldBase=loadWorld;loadWorld=(...args)=>{signatureSpells=[];return signatureWorldBase(...args);};
 // A DPS attempt cannot inherit planted traps, turrets or queued waves from before it.
 const signatureClearDummyBase=clearDummy;clearDummy=()=>{signatureSpells=[];craftedSkillWaves=[];craftedDetonations=[];return signatureClearDummyBase();};
-function paintSignatureSpells(){
+// Group only for one paint call. Combat always sees the original spell array.
+let signatureRenderGroups=null,signatureRenderSource=null;
+const emptySignatureRenderList=Object.freeze([]),emptySignatureRenderGroups=new Map();
+function signatureRenderKey(mode){return mode<64?Math.floor(mode/8)*8:mode<68?64:mode;}
+function signatureRenderList(first,last=first){
+ if(signatureRenderGroups&&signatureRenderSource===signatureSpells)return signatureRenderGroups.get(first)||emptySignatureRenderList;
+ return signatureSpells.filter(s=>(s.mode>=first&&s.mode<=last)||(first===56&&s.mode>=64&&s.flashes?.length));
+}
+function withSignatureRenderGroups(paint){
+ if(signatureRenderGroups&&signatureRenderSource===signatureSpells)return paint();
+ const previous=signatureRenderGroups,source=signatureRenderSource;let groups=emptySignatureRenderGroups;
+ if(signatureSpells.length){groups=new Map();for(const s of signatureSpells){const key=signatureRenderKey(s.mode),list=groups.get(key);if(list)list.push(s);else groups.set(key,[s]);if(key>=64&&s.flashes?.length){const flashes=groups.get(56);if(flashes)flashes.push(s);else groups.set(56,[s]);}}}
+ signatureRenderGroups=groups;signatureRenderSource=signatureSpells;
+ try{return paint();}finally{signatureRenderGroups=previous;signatureRenderSource=source;}
+}
+
+function paintSignatureSpells(){const renderList=signatureRenderList(0,7);if(!renderList.length)return;
  ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode>=8)continue;let color=ELEMENTS[s.build.elements[0]].color,r=s.build.radius;if(!visibleAt(s.x,s.y))continue;
+ for(const s of renderList){if(s.mode>=8)continue;let color=ELEMENTS[s.build.elements[0]].color,r=s.build.radius;if(!visibleAt(s.x,s.y))continue;
   if(s.mode===0){groundRing(s.x,s.y,160*r,color,2);groundRing(s.x,s.y,160*r*Math.min(1,s.time/1.2),'#fff4d6',3);let pos=project(s.x,s.y);glowAt({x:pos.x,y:pos.y-220*(1-s.time/1.2)},28,color,.8);}
   else if(s.mode===1){groundRing(s.x,s.y,60*r,color,s.time<.5?1:3);let pos=project(s.x,s.y);glowAt(pos,15,color,.5+.3*Math.sin(s.time*5));}
   else if(s.mode===2){let a=project(s.x+Math.cos(s.angle+Math.PI/2)*90*r,s.y+Math.sin(s.angle+Math.PI/2)*90*r),b=project(s.x-Math.cos(s.angle+Math.PI/2)*90*r,s.y-Math.sin(s.angle+Math.PI/2)*90*r);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=color;ctx.lineWidth=9;ctx.stroke();}

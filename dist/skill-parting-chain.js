@@ -14,7 +14,7 @@ const partingChainStepBase=stepSignature;stepSignature=(s,dt)=>{
  if(s.time>=.3&&dist(...s.pair)>=s.breakGap){for(let e of s.pair)if(e.hp>0&&enemies.includes(e)){spellHit(e,s.damage*2.4,s.build);burst(e.x,e.y,65,ELEMENTS[s.build.elements[0]].color);playSignatureAudio(92,true,e.x,e.y);}return false;}return true;
 };
 const partingChainPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- partingChainPaintBase();for(let s of signatureSpells){if(s.mode!==92||s.owner!==p||s.pair?.length!==2||s.pair.some(e=>e.hp<=0))continue;let [a,b]=s.pair,tension=clamp((dist(a,b)-s.initialGap)/120,0,1),color=ELEMENTS[s.build.elements[0]].color;
+ partingChainPaintBase();const renderList=signatureRenderList(92,92);if(!renderList.length)return;for(const s of renderList){if(s.mode!==92||s.owner!==p||s.pair?.length!==2||s.pair.some(e=>e.hp<=0))continue;let [a,b]=s.pair,tension=clamp((dist(a,b)-s.initialGap)/120,0,1),color=ELEMENTS[s.build.elements[0]].color;
   for(let e of s.pair)if(visibleAt(e.x,e.y)){groundRing(e.x,e.y,25,color,2);boundarySigil(e,30,'#e5c88e',s.time*(1+tension),4);}
   if(visibleAt(a.x,a.y)&&visibleAt(b.x,b.y)){paintLinkLine(a,b,tension>.75?'#fff0bb':color,2+tension*2);let q=project((a.x+b.x)/2,(a.y+b.y)/2);ctx.save();ctx.strokeStyle='#ffe6a1';ctx.lineWidth=2;ctx.beginPath();ctx.arc(q.x,q.y-46,12,-Math.PI/2,-Math.PI/2+Math.PI*2*tension);ctx.stroke();ctx.restore();}
  }

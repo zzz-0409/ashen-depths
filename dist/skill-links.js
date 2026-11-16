@@ -63,8 +63,8 @@ const linkSignatureStep=stepSignature;stepSignature=(s,dt)=>{
 };
 function paintLinkLine(a,b,color,width=2){let start=project(a.x,a.y),end=project(b.x,b.y);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(start.x,start.y-12);ctx.lineTo(end.x,end.y-12);ctx.stroke();}
 const linkSignaturePaint=paintSignatureSpells;paintSignatureSpells=()=>{
- linkSignaturePaint();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<32||s.mode>=40)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ linkSignaturePaint();const renderList=signatureRenderList(32,39);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<32||s.mode>=40)continue;let color=ELEMENTS[s.build.elements[0]].color;
   for(let f of s.flashes)paintLinkLine(f.a,f.b,color,4);
   if(s.mode===32&&s.target&&s.partner){paintLinkLine(s.target,s.partner,color,2);groundRing(s.target.x,s.target.y,26,color,2);groundRing(s.partner.x,s.partner.y,26,color,2);}
   if(s.mode===33){groundRing(s.origin.x,s.origin.y,200*Math.min(1,s.time/.6),color,1);}

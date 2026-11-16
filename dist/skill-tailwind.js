@@ -22,8 +22,8 @@ const tailwindStepBase=stepSignature;stepSignature=(s,dt)=>{
  s.previous={x:p.x,y:p.y};return true;
 };
 const tailwindPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- tailwindPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode!==73)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ tailwindPaintBase();const renderList=signatureRenderList(73,73);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode!==73)continue;let color=ELEMENTS[s.build.elements[0]].color;
   for(let i=s.collected;i<3;i++){let mark=s.marks[i];if(!visibleAt(mark.x,mark.y)||!lineClear(s.origin,mark))continue;let active=i===s.collected;
    groundRing(mark.x,mark.y,32,active?color:'#6d7884',active?3:1);boundarySigil(mark,active?25:18,color,s.angle+s.time*.5,3);
    let q=project(mark.x,mark.y);for(let n=0;n<=i;n++)circle(q.x+(n-i/2)*8,q.y-30,2,active?color:'#6d7884');

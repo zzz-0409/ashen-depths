@@ -32,7 +32,7 @@ stepSignature=(s,dt)=>{
 };
 const potionSigilPaintBase=paintSignatureSpells;
 paintSignatureSpells=()=>{
- potionSigilPaintBase();for(const s of signatureSpells){if(s.mode!==106||!potionSigilValid(s)||!visibleAt(s.x,s.y))continue;
+ potionSigilPaintBase();const renderList=signatureRenderList(106,106);if(!renderList.length)return;for(const s of renderList){if(s.mode!==106||!potionSigilValid(s)||!visibleAt(s.x,s.y))continue;
   const color=ELEMENTS[s.build.elements[0]].color;
   groundRing(s.x,s.y,180*s.build.radius,color,2);groundRing(s.x,s.y,44*(1-s.time/5),'#ffe4aa',3);
   boundarySigil(s,36,color,s.time*.5,5);

@@ -96,8 +96,8 @@ const contractCastBase=castCraftedSkill;castCraftedSkill=(build,damage,angle)=>{
  return result;
 };
 const controlPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- controlPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<56)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ controlPaintBase();const renderList=signatureRenderList(56,63);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<56)continue;let color=ELEMENTS[s.build.elements[0]].color;
   for(let flash of s.flashes)paintLinkLine(flash.a,flash.b,color,3);
   if(s.mode===56){for(let point of [s.origin,s]){groundRing(point.x,point.y,35,color,3);boundarySigil(point,28,color,s.time*2,6);}if(s.departed)paintLinkLine(s.origin,s,color,2);else groundRing(s.origin.x,s.origin.y,70,color,1);}
   if(s.mode===57){for(let t of s.trail)groundRing(t.x,t.y,4,color,1);boundaryShard(s.x,s.y,s.heading,26,color,12);}

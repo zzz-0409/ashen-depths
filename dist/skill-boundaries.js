@@ -80,8 +80,8 @@ const boundaryStepBase=stepSignature;stepSignature=(s,dt)=>{
  return false;
 };
 const boundaryPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- boundaryPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<40||s.mode>=48)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ boundaryPaintBase();const renderList=signatureRenderList(40,47);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<40||s.mode>=48)continue;let color=ELEMENTS[s.build.elements[0]].color;
   for(let f of s.flashes)paintLinkLine(f.a,f.b,color,4);
   if(s.mode===40){groundRing(s.x,s.y,s.ringRadius,color,4);groundRing(s.x,s.y,40*s.build.radius,color,1);}
   if(s.mode===41){let angle=s.angle+s.time*Math.PI*2/3,length=240*s.build.radius;

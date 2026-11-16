@@ -12,7 +12,7 @@ const spellbreakerStepBase=stepSignature;stepSignature=(s,dt)=>{
  spellHit(e,s.damage*(counter?4.8:1.6),s.build);burst(e.x,e.y,counter?75:40,ELEMENTS[s.build.elements[0]].color);playSignatureAudio(94,true,e.x,e.y);return false;
 };
 const spellbreakerPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- spellbreakerPaintBase();for(let s of signatureSpells){let e=s.target;if(s.mode!==94||s.owner!==p||s.finished||!e||e.hp<=0||!visibleAt(e.x,e.y))continue;let q=project(e.x,e.y),t=clamp(s.time/.35,0,1),color=spellbreakerWindup(e)?'#ffe6a1':ELEMENTS[s.build.elements[0]].color;
+ spellbreakerPaintBase();const renderList=signatureRenderList(94,94);if(!renderList.length)return;for(const s of renderList){let e=s.target;if(s.mode!==94||s.owner!==p||s.finished||!e||e.hp<=0||!visibleAt(e.x,e.y))continue;let q=project(e.x,e.y),t=clamp(s.time/.35,0,1),color=spellbreakerWindup(e)?'#ffe6a1':ELEMENTS[s.build.elements[0]].color;
  groundRing(e.x,e.y,24+20*(1-t),color,2);ctx.save();ctx.strokeStyle=color;ctx.fillStyle='#c8d5df';ctx.lineWidth=2;let y=q.y-115+70*t;ctx.beginPath();ctx.moveTo(q.x,y-22);ctx.lineTo(q.x+6,y-10);ctx.lineTo(q.x,y+12);ctx.lineTo(q.x-6,y-10);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();
  }
 };

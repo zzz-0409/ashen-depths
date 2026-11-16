@@ -21,8 +21,8 @@ const harvestStepBase=stepSignature;stepSignature=(s,dt)=>{
  if(s.time+1e-8>=.95){signatureArea(s,s,220,[0,1,2.4,4.5][s.harvested.length]);return false;}return true;
 };
 const harvestPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- harvestPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode!==76||!visibleAt(s.x,s.y))continue;let color=ELEMENTS[s.build.elements[0]].color;
+ harvestPaintBase();const renderList=signatureRenderList(76,76);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode!==76||!visibleAt(s.x,s.y))continue;let color=ELEMENTS[s.build.elements[0]].color;
   groundRing(s.x,s.y,s.harvested?220:160,color,s.harvested?2:1);
   if(!s.harvested){for(let i=0;i<3;i++){let angle=i*Math.PI*2/3+s.time*1.8,r=160*(1-s.time/.8);groundRing(s.x+Math.cos(angle)*r,s.y+Math.sin(angle)*r,10,color,2);}}
   else{let t=Math.min(1,(s.time-.6)/.35);s.harvested.forEach((id,i)=>{let angle=i*Math.PI*2/s.harvested.length+t*2,r=100*(1-t);groundRing(s.x+Math.cos(angle)*r,s.y+Math.sin(angle)*r,12+8*t,ELEMENTS[id].color,4);});groundRing(s.x,s.y,25+60*t,'#fff0cf',2);}

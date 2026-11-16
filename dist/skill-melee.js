@@ -53,8 +53,8 @@ const meleeHurtBase=hurt;hurt=damage=>{
  parry.triggered=true;meleeHurtBase(damage*.25);if(!dead)signatureArea(parry,p,140,2.5);
 };
 const meleeSignaturePaint=paintSignatureSpells;paintSignatureSpells=()=>{
- meleeSignaturePaint();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<16||s.mode>=24||!visibleAt(s.x,s.y))continue;let color=ELEMENTS[s.build.elements[0]].color;
+ meleeSignaturePaint();const renderList=signatureRenderList(16,23);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<16||s.mode>=24||!visibleAt(s.x,s.y))continue;let color=ELEMENTS[s.build.elements[0]].color;
   if(s.mode===18){groundRing(p.x,p.y,70,color,4);groundRing(p.x,p.y,80,'#fff0d6',1);}
   else if(s.mode===20)groundRing(p.x,p.y,(s.ticks?240:120)*s.build.radius,color,2);
   else if(s.mode===23){groundRing(s.x,s.y,240*s.build.radius,color,1);for(let n=0;n<6;n++){let a=n*Math.PI/3,rr=200*(1-(s.time%.1)/.1);glowAt(project(s.x+Math.cos(a)*rr,s.y+Math.sin(a)*rr),12,color,.5);}}

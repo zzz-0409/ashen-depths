@@ -33,7 +33,7 @@ stepSignature=(s,dt)=>{
  if(s.travel+1e-8>=160){s.finished=true;return false;}return true;
 };
 const wallRamPaintBase=paintSignatureSpells;
-paintSignatureSpells=()=>{wallRamPaintBase();for(const s of signatureSpells){if(s.mode!==115||!wallRamValid(s))continue;const e=s.target,color=ELEMENTS[s.build.elements[0]].color;
+paintSignatureSpells=()=>{wallRamPaintBase();const renderList=signatureRenderList(115,115);if(!renderList.length)return;for(const s of renderList){if(s.mode!==115||!wallRamValid(s))continue;const e=s.target,color=ELEMENTS[s.build.elements[0]].color;
  groundRing(e.x,e.y,enemyHitRadius(e)+10,color,2);
  const tip={x:e.x+Math.cos(s.angle)*70,y:e.y+Math.sin(s.angle)*70};paintLinkLine(e,tip,color,3);
  for(const side of [-1,1])paintLinkLine(tip,{x:tip.x-Math.cos(s.angle+side*.6)*22,y:tip.y-Math.sin(s.angle+side*.6)*22},color,2);

@@ -52,8 +52,8 @@ const positionStepBase=stepSignature;stepSignature=(s,dt)=>{
  return false;
 };
 const positionPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- positionPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<64||s.mode>67)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ positionPaintBase();const renderList=signatureRenderList(64,67);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<64||s.mode>67)continue;let color=ELEMENTS[s.build.elements[0]].color;
   if(s.mode===64){for(let e of s.pair){groundRing(e.x,e.y,30,color,2);boundarySigil(e,38,color,s.time*3,4);}paintLinkLine(s.pair[0],s.pair[1],color,3);}
   if(s.mode===65){let e=s.target;groundRing(e.x,e.y,150,color,1);let goal={x:e.x-s.side.x*100,y:e.y-s.side.y*100};boundarySigil(goal,25,color,s.time*2,3);paintLinkLine(goal,e,color,2);}
   if(s.mode===66){groundRing(s.x,s.y,180*s.build.radius,color,2);boundarySigil(s,60*(1-s.time/.9)+15,color,s.time,6);for(let e of s.targets)if(e.hp>0)paintLinkLine(s,e,color,1);}

@@ -27,6 +27,6 @@ stepSignature=(s,dt)=>{
  return true;
 };
 const enduranceChainPaintBase=paintSignatureSpells;
-paintSignatureSpells=()=>{enduranceChainPaintBase();for(const s of signatureSpells){if(s.mode!==110||!enduranceChainValid(s))continue;const e=s.target,color=ELEMENTS[s.build.elements[0]].color;if(visibleAt(e.x,e.y)){groundRing(e.x,e.y,30,color,3);groundRing(e.x,e.y,10+20*s.spent/40,'#ffe1a3',2);}if(visibleAt(p.x,p.y)||visibleAt(e.x,e.y)){paintLinkLine(p,e,color,3);for(let i=1;i<=4;i++){const t=i/5;groundRing(p.x+(e.x-p.x)*t,p.y+(e.y-p.y)*t,5,'#ffe1a3',2);}}}};
+paintSignatureSpells=()=>{enduranceChainPaintBase();const renderList=signatureRenderList(110,110);if(!renderList.length)return;for(const s of renderList){if(s.mode!==110||!enduranceChainValid(s))continue;const e=s.target,color=ELEMENTS[s.build.elements[0]].color;if(visibleAt(e.x,e.y)){groundRing(e.x,e.y,30,color,3);groundRing(e.x,e.y,10+20*s.spent/40,'#ffe1a3',2);}if(visibleAt(p.x,p.y)||visibleAt(e.x,e.y)){paintLinkLine(p,e,color,3);for(let i=1;i<=4;i++){const t=i/5;groundRing(p.x+(e.x-p.x)*t,p.y+(e.y-p.y)*t,5,'#ffe1a3',2);}}}};
 const enduranceChainStatusBase=controlSkillStatus;
 controlSkillStatus=s=>s.mode===110?{label:'縛鎖 · SP '+Math.ceil(p.sp)+' · 終撃 '+Math.round(s.spent*5)+'%',value:s.time/4,waiting:true}:enduranceChainStatusBase(s);

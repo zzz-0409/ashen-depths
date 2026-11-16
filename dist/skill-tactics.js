@@ -72,8 +72,8 @@ const tacticStepBase=stepSignature;stepSignature=(s,dt)=>{
  return false;
 };
 const tacticPaintBase=paintSignatureSpells;paintSignatureSpells=()=>{
- tacticPaintBase();ctx.save();ctx.globalCompositeOperation='lighter';
- for(let s of signatureSpells){if(s.mode<48||s.mode>=56)continue;let color=ELEMENTS[s.build.elements[0]].color;
+ tacticPaintBase();const renderList=signatureRenderList(48,55);if(!renderList.length)return;ctx.save();ctx.globalCompositeOperation='lighter';
+ for(const s of renderList){if(s.mode<48||s.mode>=56)continue;let color=ELEMENTS[s.build.elements[0]].color;
   for(let flash of s.flashes)paintLinkLine(flash.a,flash.b,color,3);
   if(s.mode===48){for(let jaw of s.jaws){let point={x:s.x+Math.cos(s.angle)*jaw.offset,y:s.y+Math.sin(s.angle)*jaw.offset};if(jaw.blocked||!lineClear(s,point))continue;
    let points=[-1,1].map(side=>{let distance=90*s.build.radius;while(distance>0&&!lineClear(point,{x:point.x-Math.sin(s.angle)*distance*side,y:point.y+Math.cos(s.angle)*distance*side}))distance-=4;return{x:point.x-Math.sin(s.angle)*distance*side,y:point.y+Math.cos(s.angle)*distance*side};});
