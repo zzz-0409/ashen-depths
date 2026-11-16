@@ -25,7 +25,7 @@ for(let branch=0;branch<12;branch++)for(let step=1;step<=15;step++){let angle=br
 for(let b=0;b<12;b++)for(let s of [5,10,15]){let id=1+b*15+s-1,next=1+((b+1)%12)*15+s-1;NODES[id].links.push(next)}
 NODES.forEach(n=>n.links.forEach(id=>{if(!NODES[id].links.includes(n.id))NODES[id].links.push(n.id)}));
 let selectedGem=null,treeZoom=.65,treeFocus=0,particles=[],zonesFx=[],attackAnim=0,walkTime=0;
-const terrain=new Image();terrain.src='assets/crypt.png';const knight=new Image();knight.src='assets/knight.png';
+const terrain=new Image();terrain.src='assets/crypt.png';const knight=new Image();knight.assetSrc='assets/knight.png';
 function affix(key){return GEAR_SLOTS.reduce((sum,slot)=>sum+(p?.[slot]?.mods||[]).filter(m=>m.key===key).reduce((a,m)=>a+m.value,0)+(EQUIPMENT[slot].stat===key?(p?.[slot]?.value||0):0),0)}
 function passive(key){return (p?.nodes||[]).reduce((sum,id)=>sum+(NODES[id]?.kind===key?NODES[id].value:0),0)}
 function stat(key){return affix(key)+passive(key)}
@@ -80,7 +80,7 @@ const priorDraw=draw;draw=()=>{priorDraw();drawExtra()};
 const oldFloor=enterFloor;enterFloor=()=>{zonesFx=[];particles=[];oldFloor()};
 const nav=document.querySelector('.menu');nav.insertAdjacentHTML('afterbegin','<button onclick="panel(\'gems\')">ジェム G</button>');
 
-const revenant=new Image();revenant.src='assets/revenant.png';
+const revenant=new Image();revenant.assetSrc='assets/revenant.png';
 function drawEnemy(e){if(!revenant.complete||!revenant.naturalWidth)return false;let size=e.boss?110:64,bob=Math.sin(clock*5+e.x)*2;ctx.save();ctx.translate(e.x,e.y-14+bob);ctx.scale(e.x>p.x?-1:1,1);ctx.rotate(Math.sin(clock*4+e.y)*.035);ctx.filter=e.slow?'sepia(.3) hue-rotate(140deg) saturate(1.4)':e.kind?'sepia(.4) hue-rotate(245deg)':'none';ctx.drawImage(revenant,-size*.5,-size*.65,size,size);ctx.restore();return true}
 
 // Explain the exact linked support rules used by skillBuild, including duplicate actives.
