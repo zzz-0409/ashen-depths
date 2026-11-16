@@ -8,7 +8,9 @@ const GEAR_TAGS={
 };
 function tagCountFor(character,id){return GEAR_SLOTS.reduce((n,slot)=>n+Number(!!character?.[slot]?.tags?.includes(id)),0)}
 function tagCount(id){return tagCountFor(p,id)}
-function tagStage(id){return Math.min(4,Math.floor(tagCount(id)/2))}
+function tagEffectiveCountFor(character,id){return tagCountFor(character,id)}
+function tagCountLabel(id,character=p){const actual=tagCountFor(character,id),effective=tagEffectiveCountFor(character,id);return actual+'部位'+(effective>actual?'（加護で'+effective+'部位相当）':'')}
+function tagStage(id){return Math.min(4,Math.floor(tagEffectiveCountFor(p,id)/2))}
 function tagStat(key){let n=0;for(let [id,tag]of Object.entries(GEAR_TAGS))for(let i=0;i<tagStage(id);i++)n+=tag.stages[i][key]||0;return n}
 const tagStatsBase=stat;stat=key=>tagStatsBase(key)+tagStat(key);
 const tagForgeBase=forgeItem;forgeItem=(spec,slot,tier,endgame=false,random=Math.random)=>{let it=tagForgeBase(spec,slot,tier,endgame,random),pool=Object.keys(GEAR_TAGS),first=endgame?Math.floor(random()*pool.length):spec.role%pool.length;it.tags=[pool.splice(first,1)[0]];let count=endgame?2+Number(tier>=2||random()<.25):tier>=2?2:1;while(it.tags.length<count)it.tags.push(pool.splice(Math.floor(random()*pool.length),1)[0]);return it};
@@ -21,19 +23,19 @@ const tagHitBase=hit;hit=(e,d)=>{let echo=!tagEcho&&!e.dotTick&&playerAction?.n=
 const tagHurtBase=hurt;hurt=d=>{let before=p.hp;tagHurtBase(d);if(before>0&&p.hp<=0&&tagStage('bastion')>=4&&tagRescueCooldown<=0){p.hp=1;p.inv=2;tagRescueCooldown=60;say('不落：致死ダメージを耐えた')}};
 const tagCastBase=cast;cast=n=>{let before=cd[3];tagCastBase(n);if(n===3&&before<=0&&cd[3]>0&&tagStage('gale')>=4)cd[3]*=.5};
 const tagUpdateBase=update;update=dt=>{if(!paused)tagRescueCooldown=Math.max(0,tagRescueCooldown-dt);tagUpdateBase(dt)};
-const tagDetailsBase=itemDetails;itemDetails=it=>tagDetailsBase(it)+(it.tags?.length?'<p class="gear-tags">'+it.tags.map(id=>GEAR_TAGS[id].name+' '+tagCount(id)+'/8').join(' · ')+'</p><button onclick="showTagGuide()">タグ効果</button>':'');
-function showTagGuide(){worldMenu('装備タグ · セット効果','<p>同じタグを持つ装備を2・4・6・8部位そろえると発動。同じ部位は1個として数えます。鞄や倉庫は対象外。</p><div class="tag-guide">'+Object.entries(GEAR_TAGS).map(([id,tag])=>'<section><h3>'+tag.name+' '+tagCount(id)+'部位</h3>'+tag.text.map((text,i)=>'<p class="'+(tagStage(id)>i?'tag-active':'muted')+'">'+(i+1)*2+'部位：'+text+'</p>').join('')+'</section>').join('')+'</div>','tags')}
+const tagDetailsBase=itemDetails;itemDetails=it=>tagDetailsBase(it)+(it.tags?.length?'<p class="gear-tags">'+it.tags.map(id=>GEAR_TAGS[id].name+' '+tagCountLabel(id)).join(' · ')+'</p><button onclick="showTagGuide()">タグ効果</button>':'');
+function showTagGuide(){worldMenu('装備タグ · セット効果','<p>同じタグを持つ装備を2・4・6・8部位そろえると発動。同じ部位は1個として数えます。鞄や倉庫は対象外。</p><div class="tag-guide">'+Object.entries(GEAR_TAGS).map(([id,tag])=>'<section><h3>'+tag.name+' '+tagCountLabel(id)+'</h3>'+tag.text.map((text,i)=>'<p class="'+(tagStage(id)>i?'tag-active':'muted')+'">'+(i+1)*2+'部位：'+text+'</p>').join('')+'</section>').join('')+'</div>','tags')}
 const tagPadBase=padMenu;padMenu=(g,left,right,dt)=>{if(menuSurface==='tags'&&padEdge(g,'back')){panel('inventory');return}tagPadBase(g,left,right,dt)};
 
 function gearTagChanges(item){
  let next={...p,[item.slot]:item};
  return Object.entries(GEAR_TAGS).flatMap(([id,tag])=>{
-  let before=tagCountFor(p,id),after=tagCountFor(next,id),oldStage=Math.min(4,Math.floor(before/2)),newStage=Math.min(4,Math.floor(after/2));
+  let before=tagCountFor(p,id),after=tagCountFor(next,id),oldStage=Math.min(4,Math.floor(tagEffectiveCountFor(p,id)/2)),newStage=Math.min(4,Math.floor(tagEffectiveCountFor(next,id)/2));
   if(oldStage===newStage)return [];
-  return [{id,before,after,gained:newStage>oldStage,stages:tag.text.map((text,index)=>({text,required:(index+1)*2,index})).filter(row=>row.index>=Math.min(oldStage,newStage)&&row.index<Math.max(oldStage,newStage))}];
+  return [{id,before,after,beforeLabel:tagCountLabel(id,p),afterLabel:tagCountLabel(id,next),gained:newStage>oldStage,stages:tag.text.map((text,index)=>({text,required:(index+1)*2,index})).filter(row=>row.index>=Math.min(oldStage,newStage)&&row.index<Math.max(oldStage,newStage))}];
  });
 }
 function gearTagPreview(item){let changes=gearTagChanges(item);if(!changes.length)return '';
- return '<div class="gear-comparison gear-tag-preview"><small>セット効果の変化</small>'+changes.map(row=>'<p class="'+(row.gained?'gain':'loss')+'">'+GEAR_TAGS[row.id].name+'：'+row.before+' → '+row.after+'部位<br>'+row.stages.map(stage=>(row.gained?'発動':'解除')+'（'+stage.required+'部位）：'+stage.text).join('<br>')+'</p>').join('')+'</div>';
+ return '<div class="gear-comparison gear-tag-preview"><small>セット効果の変化</small>'+changes.map(row=>'<p class="'+(row.gained?'gain':'loss')+'">'+GEAR_TAGS[row.id].name+'：'+row.beforeLabel+' → '+row.afterLabel+'<br>'+row.stages.map(stage=>(row.gained?'発動':'解除')+'（'+stage.required+'部位）：'+stage.text).join('<br>')+'</p>').join('')+'</div>';
 }
 const tagComparisonBase=gearComparison;gearComparison=item=>tagComparisonBase(item)+gearTagPreview(item);
