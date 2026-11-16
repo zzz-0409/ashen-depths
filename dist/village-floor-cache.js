@@ -1,3 +1,13 @@
+// Compare aligned byte masks in four-byte blocks, retaining exact tail checks.
+function floorMaskChanged(layer,field,values){
+ const saved=layer[field];
+ if(!(values instanceof Uint8Array)||values.byteOffset%4||saved.byteOffset%4){for(let i=0;i<values.length;i++)if(saved[i]!==values[i])return true;return false;}
+ const key=field+'Comparison';let views=layer[key];
+ if(!views||views.values!==values||views.saved!==saved){const count=Math.floor(values.length/4);views={values,saved,count,a:new Uint32Array(values.buffer,values.byteOffset,count),b:new Uint32Array(saved.buffer,saved.byteOffset,count)};layer[key]=views;}
+ for(let i=0;i<views.count;i++)if(views.a[i]!==views.b[i])return true;
+ for(let i=views.count*4;i<values.length;i++)if(values[i]!==saved[i])return true;
+ return false;
+}
 // Stationary village, grassland, forest and cavern ground only. Wetland water stays animated.
 // Actors, walls, unseen terrain edges and effects remain live.
 let villageFloorLayer=null;
@@ -19,7 +29,7 @@ function drawVillageFloorLayer(){
  for(const field of ['tiles','seen','visible']){
   const values=dungeon[field];
   if(!layer[field]||layer[field].length!==values.length){layer[field]=new Uint8Array(values.length);dirty=true;}
-  for(let i=0;i<values.length;i++)if(layer[field][i]!==values[i]){dirty=true;break;}
+  if(floorMaskChanged(layer,field,values))dirty=true;
  }
  if(dirty){
   const surface=layer.surface,paint=layer.paint;
