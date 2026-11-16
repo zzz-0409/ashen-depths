@@ -39,7 +39,7 @@ const jobHitBase=hit;hit=(e,d)=>{
 const jobHurtBase=hurt;hurt=d=>{let hp=p.hp,result=jobHurtBase(d);if(advancedJob()&&combatProfessionType()===1&&p.hp<hp)p.mp=Math.min(100,p.mp+5);return result};
 const jobUltimateBase=advanceUltimate;advanceUltimate=dt=>{
  let s=ultimateState;if(!s||s.type<3)return jobUltimateBase(dt);s.time+=dt;
- let interval=s.type===3?.25:s.type===4?.18:1,limit=s.type===3?6:s.type===4?8:5;
+ let interval=s.type===3?.25:s.type===4?.18:1,limit=s.compact?(s.type===4?4:3):(s.type===3?6:s.type===4?8:5);
  while(s.count<limit&&s.time>=s.next){s.count++;s.next+=interval;let targets=enemies.filter(e=>e.hp>0&&lineClear(p,e));
   if(s.type===3)targets=targets.filter(e=>{let dx=e.x-p.x,dy=e.y-p.y,along=dx*Math.cos(s.angle)+dy*Math.sin(s.angle),side=-dx*Math.sin(s.angle)+dy*Math.cos(s.angle);return along>=0&&along<=650&&Math.abs(side)<=45});
   if(s.type===4)targets=targets.filter(e=>dist(p,e)<=300).sort((a,b)=>dist(p,a)-dist(p,b)).slice(0,1);
@@ -47,7 +47,7 @@ const jobUltimateBase=advanceUltimate;advanceUltimate=dt=>{
   let previous=classHitKind;classHitKind='ultimate';try{for(let e of targets){hit(e,s.power*(s.type===3?1.8:s.type===4?1.5:1.1));if(s.type===4)burst(e.x,e.y,45,PROFESSIONS[s.type].color);}}finally{classHitKind=previous}
   burst(p.x,p.y,s.type===5?200:55,PROFESSIONS[s.type].color);playSound(s.type===3?'arrow':s.type===4?'slash':'frost',p.x,p.y);
  }
- if(s.time>=(s.type===5?5:s.type===3?1.7:1.65))ultimateState=null;
+ if(s.time>=(s.compact?(s.type===5?3:s.type===3?.9:.85):(s.type===5?5:s.type===3?1.7:1.65)))ultimateState=null;
 };
 const jobGroundBase=drawGroundEffects;drawGroundEffects=()=>{jobGroundBase();let s=ultimateState;if(!s||s.type<3)return;let col=PROFESSIONS[s.type].color;if(s.type===3){let end={x:p.x+Math.cos(s.angle)*650,y:p.y+Math.sin(s.angle)*650};paintLinkLine(p,end,col,4);for(let d=90;d<=630;d+=90)groundRing(p.x+Math.cos(s.angle)*d,p.y+Math.sin(s.angle)*d,25,col,2);}else groundRing(p.x,p.y,s.type===4?300:200,col,3);};
 function changeJob(id){
