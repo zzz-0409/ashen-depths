@@ -71,7 +71,7 @@ function drawMenuCursor(){
  let g=paused?menuCursorGeometry(document.activeElement):null;
  let cardRect=g?$('card').getBoundingClientRect?.():null;
  menuCursorAssign(menuCursorFrame,{hidden:!g});menuCursorAssign(menuCursorCaption,{hidden:!g});menuCursorAssign(menuCursorBadge,{hidden:true});if(!g)return;
- let active=document.activeElement,reading=active.matches?.('.icon-pane,#guildQuestDetail,#nodeDetail,#foundryDetail'),action=!g.ready?'A 選択位置へ':reading?'右スティック 説明 · B 一覧':active.tagName==='SELECT'?'← → 変更 · ↑ ↓ 移動':active.type==='range'?'← → 調整':'A 決定';
+ let active=document.activeElement,reading=active.matches?.('.icon-pane,#guildQuestDetail,#nodeDetail,#foundryDetail'),action=!g.ready?'A 選択位置へ':reading?'右スティック 説明 · B 一覧':active.tagName==='SELECT'?'A 候補を開く · 十字キー 移動':active.type==='range'?'← → 調整':'A 決定';
  let region=menuCursorRegion(active),state=active.type==='checkbox'||active.type==='radio'?(active.checked?' ON':' OFF'):'';
  menuCursorAssign(menuCursorCaption,{textContent:'▶ '+(region?region+'：':'')+menuCursorName(active)+state+'　｜　'+action});
  menuCursorAssign(menuCursorFrame,{className:(g.ready?'target-visible':'target-outside')+(reading?' reading-detail':'')+(g.ready&&active.matches?.('#tree .node')?' tree-node-target':'')});
